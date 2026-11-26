@@ -832,6 +832,53 @@
       .msg-hit-zone { max-width: 92%; }
       .troll-grid { grid-template-columns: 1fr; }
     }
+	.reply-quote {
+
+font-size: 12px;
+
+padding: 5px 8px;
+
+margin-bottom: 6px;
+
+border-radius: 10px;
+
+background: rgba(0, 0, 0, 0.22);
+
+border-left: 3px solid var(--tg-blue);
+
+max-width: 100%;
+
+}
+
+.reply-quote-author { font-weight: 700; color: #7dd3fc; font-size: 11px; margin-bottom: 1px; }
+
+.reply-quote-text { opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 230px; }
+
+
+
+#replyEditBanner {
+
+display: none;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 10px;
+
+padding: 7px 12px;
+
+margin-bottom: 7px;
+
+border-radius: 14px;
+
+background: rgba(42, 171, 238, 0.14);
+
+border-left: 3px solid var(--tg-blue);
+
+font-size: 12.5px;
+
+}
   </style>
 </head>
 <body data-theme="dark">
@@ -1036,6 +1083,13 @@
           </div>
 
           <div class="compact-composer" id="chatInputRow">
+		  <div id="replyEditBanner">
+            <div style="min-width:0; flex:1;">
+              <div id="reBannerTitle" style="font-weight:700; color:var(--accent); font-size:11.5px;"></div>
+              <div id="reBannerText" style="color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+            </div>
+            <button class="glass-btn icon-btn" id="reCancelBtn" style="width:28px;height:28px;font-size:13px;">✕</button>
+          </div>
             <div class="composer-pill">
               <button class="pill-icon-btn" id="toggleStickerBtn" title="Стикеры">😀</button>
               <input id="msgInput" type="text" placeholder="Сообщение" autocomplete="off" />
@@ -1052,6 +1106,8 @@
   <!-- КОНТЕКСТНЫЕ МЕНЮ -->
   <div id="msgContextMenu" class="glass">
     <div class="ctx-reacts" id="ctxReactsRow"></div>
+	<button class="ctx-action" id="ctxReplyBtn">↩️ Ответить</button>
+    <button class="ctx-action" id="ctxEditBtn">✏️ Изменить</button>
     <button class="ctx-action" id="ctxSelectBtn">☑️ Выбрать несколько</button>
     <button class="ctx-action" id="ctxForwardBtn">↪️ Переслать</button>
     <button class="ctx-action danger" id="ctxDeleteMeBtn">🗑 Удалить только у меня</button>
@@ -1941,6 +1997,9 @@
     let activeChatUnsubs = [], globalUnsubs = [];
     let selectedFx = 'none', activeStickerPackTab = 'base';
     let contextTarget = null, forwardMessagesList = [];
+	let replyTargetMsg = null;
+    let editingTargetMsg = null;
+    let deferredPwaPrompt = null;
     let pendingMedia = { data: null, frame: 'none' };
     let typingTimeout = null, loginAttempts = 0, loginLockedUntil = 0;
 
@@ -2258,12 +2317,14 @@
             <button class="settings-cat-btn" data-cat="chats"><span>💬 Настройки чатов</span><span>›</span></button>
             <button class="settings-cat-btn" data-cat="privacy"><span>🔒 Конфиденциальность</span><span>›</span></button>
             <button class="settings-cat-btn" data-cat="appearance"><span>🎨 Оформление и темы</span><span>›</span></button>
-            <button class="settings-cat-btn" data-cat="calls"><span>📞 Звонки и уведомления</span><span>›</span></button>
+            
+			<button class="settings-cat-btn" id="installPwaBtn"><span>📲 Ярлык на главный экран</span><span>›</span></button>
             <button class="glass-btn btn-danger" id="profLogoutBtn" style="width:100%; margin-top:4px;">🚪 Выйти из аккаунта</button>
           </div>
         `;
         box.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { profileSettingsView = b.dataset.cat; renderSidebar(); });
         box.querySelector('#profLogoutBtn').onclick = logout;
+		box.querySelector('#installPwaBtn').onclick = triggerPwaInstall;
         return;
       }
 
@@ -3205,6 +3266,9 @@
           senderHeader = `<div class="msg-sender-head" data-sprof="${sender.uid}">${esc(getDisplayName(sender))} ${renderBadgesHtml(sender)} <span class="tiny-handle">@${esc(sender.username)}</span></div>`;
         }
         const fwdHtml = m.forwardedFrom
+		const replyHtml = m.replyTo
+          ? `<div class="reply-quote"><div class="reply-quote-author">↩️ ${esc(m.replyTo.senderName)}</div><div class="reply-quote-text">${esc(m.replyTo.text)}</div></div>` : '';
+        const editedTag = m.edited ? `<span style="opacity:0.7;font-style:italic;">изм.</span>` : '';
           ? `<div class="fwd-banner">↪️ Переслано от ${esc(m.forwardedFrom.displayName)} (@${esc(m.forwardedFrom.username)})</div>` : '';
 
         let bodyHtml = '';
@@ -3227,9 +3291,9 @@
           bodyHtml = `<div class="msg-bubble" style="padding:7px;">${fwdHtml}<video class="video-msg" src="${esc(m.mediaData)}" controls playsinline></video><div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
         } else if (m.type === 'file') {
           bodyHtml = `<div class="msg-bubble">${fwdHtml}<a class="file-card" href="${esc(m.fileData)}" download="${esc(m.fileName || 'file')}"><div class="file-icon">📄</div><div style="min-width:0;flex:1;"><div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(m.fileName || 'Файл')}</div><div style="font-size:11px;opacity:0.75;">${esc(m.fileSize || '')} • Скачать</div></div></a><div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
-        } else {
+		  } else {
           const fxClass = m.effect && m.effect !== 'none' ? ` fx-${m.effect}` : '';
-          bodyHtml = `<div class="msg-bubble${fxClass}">${fwdHtml}<div class="msg-text">${esc(m.text)}</div><div class="msg-footer">${m.effect && m.effect !== 'none' ? '✨' : ''} <span>${fmtTime(m.timestamp)}</span></div></div>`;
+          bodyHtml = `<div class="msg-bubble${fxClass}">${fwdHtml}${replyHtml}<div class="msg-text">${esc(m.text)}</div><div class="msg-footer">${editedTag} ${m.effect && m.effect !== 'none' ? '✨' : ''} <span>${fmtTime(m.timestamp)}</span></div></div>`;
         }
 
         let reactsHtml = '';
@@ -3376,8 +3440,17 @@
       if (selectedFx !== 'none') playMessageFx(selectedFx, rect.left, rect.top);
       else spawnParticles(rect.left+15, rect.top+15, 10, { colors:['#2aabee','#818cf8','#fff'], speed:5, upward:2 });
 
+      if (editingTargetMsg) {
+        const { dbPath, msgId } = editingTargetMsg;
+        clearReplyEdit();
+        await update(ref(db, `${dbPath}/${msgId}`), { text, edited: true });
+        showToast('✏️ Сообщение изменено');
+        return;
+      }
+      const extraFields = { type: 'text', text, effect: selectedFx };
+      if (replyTargetMsg) { extraFields.replyTo = replyTargetMsg; clearReplyEdit(); }
       if (activeTarget.type === 'dm') set(ref(db, `typing/${[currentUser.uid, activeTarget.id].sort().join('_')}/${currentUser.uid}`), false).catch(()=>{});
-      await dispatchMessage(activeTarget, { type: 'text', text, effect: selectedFx }, text);
+      await dispatchMessage(activeTarget, extraFields, text);
     }
 
     let mediaRecorder = null, audioChunks = [], isRecordingVoice = false, recTouchMode = false;
@@ -3530,6 +3603,8 @@
       contextTarget = { dbPath, msgId, msg };
       const canDelAll = msg.senderUid === currentUser.uid || isDev(currentUser) || activeTarget?.type === 'saved';
       document.getElementById('ctxDeleteAllBtn').style.display = canDelAll ? 'flex' : 'none';
+	  const canEdit = msg.senderUid === currentUser.uid && msg.type === 'text';
+      document.getElementById('ctxEditBtn').style.display = canEdit ? 'flex' : 'none';
       ctxMenu.style.display = 'flex';
       ctxMenu.style.left = Math.min(Math.max(10, x - 110), W - 235) + 'px';
       ctxMenu.style.top = Math.min(Math.max(10, y - 90), H - 230) + 'px';
@@ -4982,6 +5057,99 @@
     }
 
     tryAutoLogin();
+	// --- ОТВЕТ И РЕДАКТИРОВАНИЕ СООБЩЕНИЙ ---
+    function clearReplyEdit() {
+      replyTargetMsg = null;
+      editingTargetMsg = null;
+      document.getElementById('replyEditBanner').style.display = 'none';
+    }
+    document.getElementById('reCancelBtn').onclick = () => {
+      if (editingTargetMsg) { msgInputEl.value = ''; syncComposerBtn(); }
+      clearReplyEdit();
+    };
+
+    document.getElementById('ctxReplyBtn').onclick = () => {
+      if (!contextTarget) return;
+      ctxMenu.style.display = 'none';
+      const { msgId, msg } = contextTarget;
+      const sender = allUsersCache[msg.senderUid];
+      const senderName = sender ? getDisplayName(sender) : 'Пользователь';
+      const preview = msg.type === 'text' ? msg.text
+        : msg.type === 'voice' ? '🎙️ Голосовое сообщение'
+        : msg.type === 'media' ? (msg.text || '🖼 Фото / GIF')
+        : msg.type === 'video' ? '🎬 Видео'
+        : msg.type === 'file' ? `📄 ${msg.fileName || 'Файл'}`
+        : msg.type === 'sticker' ? '✨ Стикер' : 'Сообщение';
+
+      editingTargetMsg = null;
+      replyTargetMsg = { id: msgId, senderName, text: preview.slice(0, 90) };
+      document.getElementById('reBannerTitle').textContent = `↩️ Ответ для ${senderName}`;
+      document.getElementById('reBannerText').textContent = replyTargetMsg.text;
+      document.getElementById('replyEditBanner').style.display = 'flex';
+      msgInputEl.focus();
+    };
+
+    document.getElementById('ctxEditBtn').onclick = () => {
+      if (!contextTarget) return;
+      ctxMenu.style.display = 'none';
+      const { dbPath, msgId, msg } = contextTarget;
+      if (msg.senderUid !== currentUser.uid || msg.type !== 'text') return;
+
+      replyTargetMsg = null;
+      editingTargetMsg = { dbPath, msgId };
+      document.getElementById('reBannerTitle').textContent = '✏️ Редактирование сообщения';
+      document.getElementById('reBannerText').textContent = msg.text.slice(0, 90);
+      document.getElementById('replyEditBanner').style.display = 'flex';
+      msgInputEl.value = msg.text;
+      syncComposerBtn();
+      msgInputEl.focus();
+    };
+
+    // --- ЯРЛЫК НА ГЛАВНЫЙ ЭКРАН (PWA) ---
+    (function setupDynamicPwa() {
+      const c = document.createElement('canvas'); c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0, 0, 512, 512);
+      g.addColorStop(0, '#2aabee'); g.addColorStop(1, '#6366f1');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, 512, 512);
+      ctx.font = '260px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('❄️', 256, 270);
+      const iconUrl = c.toDataURL('image/png');
+
+      const manifest = {
+        name: 'ZIMA Messenger', short_name: 'ZIMA',
+        start_url: location.href, display: 'standalone',
+        background_color: '#0e1621', theme_color: '#0e1621',
+        icons: [{ src: iconUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+      const link = document.createElement('link');
+      link.rel = 'manifest'; link.href = URL.createObjectURL(blob);
+      document.head.appendChild(link);
+
+      const appleIcon = document.createElement('link');
+      appleIcon.rel = 'apple-touch-icon'; appleIcon.href = iconUrl;
+      document.head.appendChild(appleIcon);
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+      });
+    })();
+
+    async function triggerPwaInstall() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        const choice = await deferredPwaPrompt.userChoice;
+        if (choice.outcome === 'accepted') showToast('✅ Ярлык ZIMA добавлен!', '#34d399');
+        deferredPwaPrompt = null;
+      } else {
+        const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        alert(isIos
+          ? 'На iPhone нажми кнопку «Поделиться» (квадрат со стрелкой внизу) → «На экран „Домой“».'
+          : 'Нажми на три точки (⋮) в углу браузера → «Добавить на главный экран» или «Установить приложение».');
+      }
+    }
   </script>
 </body>
 </html>
