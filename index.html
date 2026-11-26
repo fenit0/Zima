@@ -17,168 +17,268 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-deep: #0e1621;
-      --bg-sidebar: rgba(17, 25, 39, 0.86);
-      --bg-chat: rgba(12, 19, 31, 0.8);
-      --glass-card: rgba(255, 255, 255, 0.065);
-      --glass-border: rgba(255, 255, 255, 0.11);
-      --glass-highlight: rgba(255, 255, 255, 0.18);
+      --bg-deep: #0b1220;
+      --outer-bg: radial-gradient(circle at 18% 15%, rgba(56,189,248,0.12) 0%, #0b1220 75%);
+      --panel-rgb: 17, 25, 40;
+      --chat-rgb: 12, 20, 34;
+      --sidebar-alpha: 0.46;
+      --chat-alpha: 0.34;
+      --header-alpha: 0.62;
+      --nav-alpha: 0.72;
+      --sidebar-blur: 6px;
+      --chat-blur: 4px;
+      --header-blur: 14px;
+      --glass-sat: 175%;
+      --bg-sidebar: rgba(var(--panel-rgb), var(--sidebar-alpha));
+      --bg-chat: rgba(var(--chat-rgb), var(--chat-alpha));
+      --modal-bg: rgba(var(--panel-rgb), 0.92);
+      --glass-card: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --glass-highlight: rgba(255, 255, 255, 0.28);
       --tg-blue: #2aabee;
       --accent: #38bdf8;
       --accent-2: #818cf8;
       --danger: #fb7185;
       --success: #34d399;
       --text: #f1f5f9;
-      --muted: #8b9bb4;
-      --msg-out: linear-gradient(135deg, rgba(124, 58, 237, 0.88), rgba(42, 171, 238, 0.82));
-      --msg-in: rgba(30, 41, 59, 0.92);
-      --input-bg: rgba(14, 21, 34, 0.9);
-      --header-bg: rgba(17, 25, 39, 0.9);
-      --nav-bg: rgba(14, 22, 33, 0.96);
+      --muted: #94a3b8;
+      --msg-out: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(42, 171, 238, 0.86));
+      --msg-in: rgba(24, 35, 54, 0.88);
+      --input-bg: rgba(14, 21, 34, 0.78);
+      --header-bg: rgba(var(--panel-rgb), var(--header-alpha));
+      --nav-bg: rgba(var(--panel-rgb), var(--nav-alpha));
       --blob1: #0284c7;
       --blob2: #6d28d9;
       --blob3: #06b6d4;
     }
 
     body[data-theme="light"] {
-      --bg-deep: #e2e8f0;
-      --bg-sidebar: rgba(255, 255, 255, 0.9);
-      --bg-chat: rgba(241, 245, 249, 0.86);
-      --glass-card: rgba(15, 23, 42, 0.055);
-      --glass-border: rgba(15, 23, 42, 0.12);
-      --glass-highlight: rgba(255, 255, 255, 0.85);
+      --bg-deep: #cbd5e1;
+      --outer-bg: linear-gradient(145deg, #cbd5e1 0%, #dbeafe 55%, #e2e8f0 100%);
+      --panel-rgb: 255, 255, 255;
+      --chat-rgb: 241, 245, 249;
+      --modal-bg: rgba(255, 255, 255, 0.95);
+      --glass-card: rgba(15, 23, 42, 0.06);
+      --glass-border: rgba(15, 23, 42, 0.13);
+      --glass-highlight: rgba(255, 255, 255, 0.9);
       --text: #0f172a;
       --muted: #475569;
       --msg-out: linear-gradient(135deg, #2aabee, #6366f1);
-      --msg-in: rgba(255, 255, 255, 0.95);
-      --input-bg: rgba(255, 255, 255, 0.95);
-      --header-bg: rgba(255, 255, 255, 0.94);
-      --nav-bg: rgba(255, 255, 255, 0.96);
+      --msg-in: rgba(255, 255, 255, 0.92);
+      --input-bg: rgba(255, 255, 255, 0.88);
       --blob1: #7dd3fc; --blob2: #c4b5fd; --blob3: #a5f3fc;
     }
     body[data-theme="light"] .msg-row.out .msg-bubble { color: #fff; }
     body[data-theme="light"] .msg-row.out .msg-footer { color: rgba(255,255,255,0.88); }
 
     body[data-theme="aurora"] {
-      --bg-deep: #041219; --blob1: #10b981; --blob2: #6366f1; --blob3: #06b6d4;
-      --msg-out: linear-gradient(135deg, rgba(16,185,129,0.78), rgba(6,182,212,0.82));
+      --bg-deep: #041219;
+      --outer-bg: radial-gradient(circle at 25% 20%, #093038 0%, #030e14 75%);
+      --panel-rgb: 8, 28, 36; --chat-rgb: 5, 22, 30;
+      --blob1: #10b981; --blob2: #6366f1; --blob3: #06b6d4;
+      --msg-out: linear-gradient(135deg, rgba(16,185,129,0.84), rgba(6,182,212,0.86));
     }
     body[data-theme="ocean"] {
-      --bg-deep: #041326; --blob1: #0ea5e9; --blob2: #1d4ed8; --blob3: #38bdf8;
-      --msg-out: linear-gradient(135deg, rgba(14,165,233,0.82), rgba(37,99,235,0.86));
+      --bg-deep: #041326;
+      --outer-bg: radial-gradient(circle at 30% 80%, #0c3566 0%, #030e1e 75%);
+      --panel-rgb: 8, 25, 48; --chat-rgb: 6, 20, 42;
+      --blob1: #0ea5e9; --blob2: #1d4ed8; --blob3: #38bdf8;
+      --msg-out: linear-gradient(135deg, rgba(14,165,233,0.86), rgba(37,99,235,0.88));
     }
     body[data-theme="cyber"] {
-      --bg-deep: #0d0618; --blob1: #ec4899; --blob2: #7c3aed; --blob3: #06b6d4;
+      --bg-deep: #0d0618;
+      --outer-bg: radial-gradient(circle at 20% 20%, #2a0d45 0%, #0a0414 75%);
+      --panel-rgb: 22, 10, 38; --chat-rgb: 16, 7, 28;
+      --blob1: #ec4899; --blob2: #7c3aed; --blob3: #06b6d4;
       --tg-blue: #ec4899; --accent: #f472b6;
-      --msg-out: linear-gradient(135deg, rgba(236,72,153,0.82), rgba(124,58,237,0.86));
+      --msg-out: linear-gradient(135deg, rgba(236,72,153,0.86), rgba(124,58,237,0.88));
     }
     body[data-theme="sunset"] {
-      --bg-deep: #1a0b12; --blob1: #f97316; --blob2: #e11d48; --blob3: #eab308;
+      --bg-deep: #1a0b12;
+      --outer-bg: radial-gradient(circle at 75% 20%, #4a1426 0%, #14070e 75%);
+      --panel-rgb: 36, 14, 24; --chat-rgb: 26, 10, 18;
+      --blob1: #f97316; --blob2: #e11d48; --blob3: #eab308;
       --tg-blue: #fb923c; --accent: #fdba74;
-      --msg-out: linear-gradient(135deg, rgba(249,115,22,0.82), rgba(225,29,72,0.86));
+      --msg-out: linear-gradient(135deg, rgba(249,115,22,0.86), rgba(225,29,72,0.88));
     }
+
+    /* ТЕМЫ С УЗОРОМ: ПОЗАДИ КОНТРАСТНЫЙ ЦВЕТ, А САМ УЗОР — ЧЁТКО ВНУТРИ ЧАТА И МЕНЮ! */
     body[data-theme="tg_space"] {
-      --bg-deep: #0b1628; --bg-chat: rgba(9, 18, 34, 0.56); --bg-sidebar: rgba(13, 22, 38, 0.86);
-      --blob1: #2563eb; --blob2: #7c3aed; --blob3: #06b6d4;
+      --bg-deep: #060b18;
+      --outer-bg: linear-gradient(145deg, #050814 0%, #101633 50%, #080d1e 100%);
+      --panel-rgb: 15, 25, 48; --chat-rgb: 14, 27, 54;
+      --blob1: #3b82f6; --blob2: #7c3aed; --blob3: #06b6d4;
       --msg-out: linear-gradient(135deg, #7c3aed, #3b82f6);
-      --msg-in: rgba(24, 37, 58, 0.92);
+      --msg-in: rgba(24, 39, 66, 0.92);
     }
-    body[data-theme="tg_space"] .theme-pattern {
+    body[data-theme="tg_space"] .panel-pattern {
       display: block;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 220px 220px;
-      opacity: 0.72;
-      animation: patternDrift 48s linear infinite;
+      animation: patternDrift 52s linear infinite;
     }
+    body[data-theme="tg_space"] .chat-pattern { opacity: 0.9; }
+    body[data-theme="tg_space"] .sidebar-pattern { opacity: 0.5; }
+
     body[data-theme="tg_sky"] {
-      --bg-deep: #6cb8f6; --bg-sidebar: rgba(255, 255, 255, 0.9); --bg-chat: rgba(114, 187, 247, 0.34);
-      --glass-card: rgba(15, 23, 42, 0.06); --glass-border: rgba(15, 23, 42, 0.12); --glass-highlight: rgba(255, 255, 255, 0.85);
+      --bg-deep: #1e4f91;
+      --outer-bg: linear-gradient(145deg, #1d4ed8 0%, #2563eb 50%, #0284c7 100%);
+      --panel-rgb: 232, 244, 255; --chat-rgb: 125, 196, 252;
+      --modal-bg: rgba(245, 250, 255, 0.96);
+      --glass-card: rgba(15, 23, 42, 0.065); --glass-border: rgba(15, 23, 42, 0.14); --glass-highlight: rgba(255, 255, 255, 0.85);
       --text: #0f172a; --muted: #334155;
-      --msg-out: linear-gradient(135deg, #2aabee, #3b82f6);
-      --msg-in: rgba(255, 255, 255, 0.95);
-      --input-bg: rgba(255, 255, 255, 0.96); --header-bg: rgba(255, 255, 255, 0.94); --nav-bg: rgba(255, 255, 255, 0.96);
-      --blob1: #93c5fd; --blob2: #60a5fa; --blob3: #bae6fd;
+      --msg-out: linear-gradient(135deg, #0ea5e9, #3b82f6);
+      --msg-in: rgba(255, 255, 255, 0.94);
+      --input-bg: rgba(255, 255, 255, 0.92);
+      --blob1: #93c5fd; --blob2: #38bdf8; --blob3: #bae6fd;
     }
-    body[data-theme="tg_sky"] .aurora-bg { background: linear-gradient(155deg, #8fd3ff 0%, #68b5f5 55%, #79c4ff 100%); }
-    body[data-theme="tg_sky"] .theme-pattern {
+    body[data-theme="tg_sky"] .chat-pane {
+      background: linear-gradient(160deg, rgba(145, 212, 255, calc(var(--chat-alpha) + 0.35)), rgba(102, 180, 248, calc(var(--chat-alpha) + 0.38)));
+    }
+    body[data-theme="tg_sky"] .panel-pattern {
       display: block;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 220px 220px;
-      filter: invert(1) sepia(1) saturate(4) hue-rotate(185deg);
-      opacity: 0.42;
+      filter: invert(1) sepia(1) saturate(4.5) hue-rotate(185deg);
     }
+    body[data-theme="tg_sky"] .chat-pattern { opacity: 0.52; }
+    body[data-theme="tg_sky"] .sidebar-pattern { opacity: 0.25; }
     body[data-theme="tg_sky"] .msg-row.out .msg-bubble { color: #fff; }
     body[data-theme="tg_sky"] .msg-row.out .msg-footer { color: rgba(255,255,255,0.88); }
 
     body[data-theme="emerald_doodle"] {
-      --bg-deep: #06211c; --bg-sidebar: rgba(7, 30, 26, 0.88); --bg-chat: rgba(6, 26, 22, 0.62);
+      --bg-deep: #02120f;
+      --outer-bg: linear-gradient(145deg, #020e0b 0%, #07261f 55%, #031511 100%);
+      --panel-rgb: 8, 36, 30; --chat-rgb: 9, 44, 36;
       --tg-blue: #10b981; --accent: #34d399;
       --blob1: #059669; --blob2: #0d9488; --blob3: #34d399;
       --msg-out: linear-gradient(135deg, #059669, #0d9488);
-      --msg-in: rgba(16, 46, 40, 0.92);
+      --msg-in: rgba(14, 48, 41, 0.92);
     }
-    body[data-theme="emerald_doodle"] .theme-pattern {
+    body[data-theme="emerald_doodle"] .panel-pattern {
       display: block;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' opacity='0.2'%3E%3Cpath d='M40 24v32M24 40h32M29 29l22 22M51 29L29 51'/%3E%3Cpolygon points='145,24 162,56 128,56'/%3E%3Cpath d='M145 56v10'/%3E%3Crect x='26' y='124' width='26' height='18' rx='5'/%3E%3Cpath d='M32 142l-4 7 10-7'/%3E%3Cpath d='M100 96c8-12 24-6 20 8-4 10-20 20-20 20s-16-10-20-20c-4-14 12-20 20-8z'/%3E%3Cpath d='M154 134l4 10 10 4-10 4-4 10-4-10-10-4 10-4z'/%3E%3Ccircle cx='96' cy='38' r='5'/%3E%3Ccircle cx='88' cy='168' r='4'/%3E%3Ccircle cx='178' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.55' stroke-linecap='round' opacity='0.24'%3E%3Cpath d='M40 24v32M24 40h32M29 29l22 22M51 29L29 51'/%3E%3Cpolygon points='145,24 162,56 128,56'/%3E%3Cpath d='M145 56v10'/%3E%3Crect x='26' y='124' width='26' height='18' rx='5'/%3E%3Cpath d='M32 142l-4 7 10-7'/%3E%3Cpath d='M100 96c8-12 24-6 20 8-4 10-20 20-20 20s-16-10-20-20c-4-14 12-20 20-8z'/%3E%3Cpath d='M154 134l4 10 10 4-10 4-4 10-4-10-10-4 10-4z'/%3E%3Ccircle cx='96' cy='38' r='5'/%3E%3Ccircle cx='88' cy='168' r='4'/%3E%3Ccircle cx='178' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E");
       background-size: 200px 200px;
-      opacity: 0.68;
       animation: patternDrift 56s linear infinite;
     }
+    body[data-theme="emerald_doodle"] .chat-pattern { opacity: 0.85; }
+    body[data-theme="emerald_doodle"] .sidebar-pattern { opacity: 0.45; }
 
     body[data-theme="matrix_rain"] {
-      --bg-deep: #020a05; --bg-sidebar: rgba(4, 16, 8, 0.86); --bg-chat: rgba(2, 12, 6, 0.68);
+      --bg-deep: #020a05;
+      --outer-bg: radial-gradient(circle at 50% 20%, #052210 0%, #010804 75%);
+      --panel-rgb: 4, 18, 9; --chat-rgb: 2, 14, 7;
       --tg-blue: #22c55e; --accent: #4ade80;
       --blob1: #16a34a; --blob2: #15803d; --blob3: #22c55e;
-      --msg-out: linear-gradient(135deg, rgba(22,163,74,0.86), rgba(5,150,105,0.88));
-      --msg-in: rgba(8, 28, 16, 0.92);
+      --msg-out: linear-gradient(135deg, rgba(22,163,74,0.88), rgba(5,150,105,0.9));
+      --msg-in: rgba(8, 30, 17, 0.9);
     }
     body[data-theme="starfield"] {
-      --bg-deep: #030510; --bg-sidebar: rgba(8, 12, 28, 0.84); --bg-chat: rgba(4, 7, 18, 0.58);
+      --bg-deep: #030510;
+      --outer-bg: radial-gradient(circle at 50% 40%, #101940 0%, #02040c 75%);
+      --panel-rgb: 9, 14, 34; --chat-rgb: 5, 9, 24;
       --tg-blue: #60a5fa; --accent: #93c5fd;
       --blob1: #312e81; --blob2: #1e3a8a; --blob3: #4f46e5;
-      --msg-out: linear-gradient(135deg, rgba(79,70,229,0.86), rgba(37,99,235,0.86));
+      --msg-out: linear-gradient(135deg, rgba(79,70,229,0.88), rgba(37,99,235,0.88));
       --msg-in: rgba(18, 25, 48, 0.9);
     }
     body[data-theme="sakura"] {
-      --bg-deep: #1e0e1b; --bg-sidebar: rgba(34, 16, 32, 0.86); --bg-chat: rgba(28, 12, 26, 0.62);
+      --bg-deep: #1c0c19;
+      --outer-bg: radial-gradient(circle at 30% 20%, #3d1536 0%, #150814 75%);
+      --panel-rgb: 36, 16, 34; --chat-rgb: 28, 12, 26;
       --tg-blue: #f472b6; --accent: #f9a8d4;
       --blob1: #ec4899; --blob2: #a855f7; --blob3: #fb7185;
-      --msg-out: linear-gradient(135deg, rgba(236,72,153,0.84), rgba(168,85,247,0.84));
+      --msg-out: linear-gradient(135deg, rgba(236,72,153,0.86), rgba(168,85,247,0.86));
       --msg-in: rgba(54, 24, 48, 0.9);
     }
     body[data-theme="cyber_grid"] {
-      --bg-deep: #0b0319; --bg-sidebar: rgba(16, 6, 32, 0.86); --bg-chat: rgba(10, 4, 24, 0.6);
+      --bg-deep: #070212;
+      --outer-bg: linear-gradient(145deg, #060110 0%, #1b0636 55%, #090218 100%);
+      --panel-rgb: 18, 7, 36; --chat-rgb: 12, 5, 28;
       --tg-blue: #06b6d4; --accent: #f472b6;
       --blob1: #d946ef; --blob2: #06b6d4; --blob3: #7c3aed;
-      --msg-out: linear-gradient(135deg, rgba(217,70,239,0.82), rgba(6,182,212,0.85));
+      --msg-out: linear-gradient(135deg, rgba(217,70,239,0.85), rgba(6,182,212,0.88));
       --msg-in: rgba(28, 14, 52, 0.92);
     }
-    body[data-theme="cyber_grid"] .theme-pattern {
+    body[data-theme="cyber_grid"] .panel-pattern {
       display: block;
       background-image:
-        linear-gradient(rgba(6, 182, 212, 0.16) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(217, 70, 239, 0.16) 1px, transparent 1px);
+        linear-gradient(rgba(6, 182, 212, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 70, 239, 0.22) 1px, transparent 1px);
       background-size: 42px 42px;
-      animation: gridScroll 16s linear infinite;
+      animation: gridScroll 12s linear infinite;
     }
+    body[data-theme="cyber_grid"] .chat-pattern { opacity: 0.9; }
+    body[data-theme="cyber_grid"] .sidebar-pattern { opacity: 0.45; }
+
     body[data-theme="lava_ember"] {
-      --bg-deep: #140505; --bg-sidebar: rgba(28, 9, 9, 0.86); --bg-chat: rgba(20, 6, 6, 0.65);
+      --bg-deep: #140505;
+      --outer-bg: radial-gradient(circle at 50% 90%, #451008 0%, #100303 75%);
+      --panel-rgb: 30, 10, 10; --chat-rgb: 22, 7, 7;
       --tg-blue: #f97316; --accent: #fb923c;
       --blob1: #dc2626; --blob2: #ea580c; --blob3: #f59e0b;
       --msg-out: linear-gradient(135deg, rgba(234,88,12,0.88), rgba(220,38,38,0.88));
       --msg-in: rgba(45, 16, 14, 0.92);
     }
     body[data-theme="neon_net"] {
-      --bg-deep: #060b18; --bg-sidebar: rgba(10, 18, 36, 0.85); --bg-chat: rgba(6, 12, 26, 0.62);
+      --bg-deep: #060b18;
+      --outer-bg: radial-gradient(circle at 25% 25%, #0c2248 0%, #040814 75%);
+      --panel-rgb: 10, 19, 38; --chat-rgb: 7, 13, 28;
       --tg-blue: #38bdf8; --accent: #7dd3fc;
       --blob1: #0284c7; --blob2: #4f46e5; --blob3: #06b6d4;
-      --msg-out: linear-gradient(135deg, rgba(14,165,233,0.84), rgba(99,102,241,0.86));
+      --msg-out: linear-gradient(135deg, rgba(14,165,233,0.86), rgba(99,102,241,0.88));
       --msg-in: rgba(17, 29, 54, 0.92);
     }
 
-    .theme-pattern {
-      position: absolute; inset: 0; display: none; pointer-events: none; z-index: 1;
+    /* Слой узора внутри чата и сайдбара */
+    .panel-pattern {
+      position: absolute; inset: 0; display: none; pointer-events: none; z-index: 0;
     }
+    .sidebar > :not(.panel-pattern):not(.fab-btn),
+    .chat-pane > :not(.panel-pattern):not(#dropOverlay) {
+      position: relative; z-index: 2;
+    }
+
+    /* Режим "Жидкое стекло" vs "Чистая прозрачность" */
+    body[data-glass="liquid"] .sidebar,
+    body[data-glass="liquid"] .chat-pane {
+      box-shadow:
+        inset 0 1.5px 1px var(--glass-highlight),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2),
+        0 20px 50px rgba(0, 0, 0, 0.42);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+    body[data-glass="liquid"][data-theme="light"] .sidebar,
+    body[data-glass="liquid"][data-theme="light"] .chat-pane,
+    body[data-glass="liquid"][data-theme="tg_sky"] .sidebar,
+    body[data-glass="liquid"][data-theme="tg_sky"] .chat-pane {
+      border-color: rgba(255, 255, 255, 0.65);
+      box-shadow: inset 0 1.5px 2px rgba(255,255,255,0.9), 0 16px 40px rgba(15,23,42,0.18);
+    }
+    body[data-glass="liquid"] .chat-pane::before,
+    body[data-glass="liquid"] .sidebar::before {
+      content: "";
+      position: absolute; inset: 0; pointer-events: none; z-index: 1; border-radius: inherit;
+      background: linear-gradient(145deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.02) 38%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.05) 100%);
+    }
+    body[data-glass="transparent"] .sidebar,
+    body[data-glass="transparent"] .chat-pane {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Слайдеры в настройках оформления */
+    .zima-range {
+      width: 100%; accent-color: var(--tg-blue); cursor: pointer; height: 6px;
+    }
+    .preset-pills {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
+    }
+    .preset-pill {
+      padding: 6px 4px; border-radius: 10px; border: 1px solid var(--glass-border);
+      background: var(--glass-card); color: var(--text); font-size: 11.5px; font-weight: 700; cursor: pointer;
+    }
+    .preset-pill:hover { border-color: var(--tg-blue); background: rgba(42,171,238,0.18); }
+
     @keyframes patternDrift { 0%{background-position:0 0} 100%{background-position:220px 220px} }
     @keyframes gridScroll { 0%{background-position:0 0} 100%{background-position:0 42px} }
 
@@ -244,7 +344,7 @@
       inset: 0;
       z-index: 0;
       overflow: hidden;
-      background: radial-gradient(circle at 18% 15%, rgba(255,255,255,0.05) 0%, var(--bg-deep) 75%);
+      background: var(--outer-bg);
       background-size: cover;
       background-position: center;
     }
@@ -264,11 +364,21 @@
     #fxCanvas { z-index: 950; }
 
     .glass {
-      background: var(--bg-sidebar);
+      background: var(--modal-bg);
       backdrop-filter: blur(22px) saturate(165%);
       -webkit-backdrop-filter: blur(22px) saturate(165%);
       border: 1px solid var(--glass-border);
       box-shadow: inset 0 1px 0 var(--glass-highlight), 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .sidebar.glass {
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(var(--sidebar-blur)) saturate(var(--glass-sat));
+      -webkit-backdrop-filter: blur(var(--sidebar-blur)) saturate(var(--glass-sat));
+    }
+    .chat-pane.glass {
+      background: var(--bg-chat);
+      backdrop-filter: blur(var(--chat-blur)) saturate(var(--glass-sat));
+      -webkit-backdrop-filter: blur(var(--chat-blur)) saturate(var(--glass-sat));
     }
 
     .glass-btn {
@@ -447,7 +557,8 @@
     .bottom-nav {
       display: grid; grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--glass-border);
-      background: var(--nav-bg);
+      background: var(--nav-bg); backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
+      -webkit-backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
       padding: 7px 4px calc(7px + env(safe-area-inset-bottom, 0px));
       flex-shrink: 0;
     }
@@ -491,8 +602,9 @@
 
     .chat-header {
       padding: 10px 14px; border-bottom: 1px solid var(--glass-border);
-      background: var(--header-bg); display: flex; align-items: center;
-      justify-content: space-between; gap: 10px; flex-shrink: 0; min-height: 60px;
+      background: var(--header-bg); backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
+      -webkit-backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; min-height: 60px;
     }
     .chat-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .chat-header-clickable { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; cursor: pointer; }
@@ -654,7 +766,8 @@
     .chat-input-wrap {
       padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
       border-top: 1px solid var(--glass-border);
-      background: var(--header-bg);
+      background: var(--header-bg); backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
+      -webkit-backdrop-filter: blur(var(--header-blur)) saturate(var(--glass-sat));
       position: relative; flex-shrink: 0;
     }
     .bot-quick-replies { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
@@ -982,12 +1095,11 @@
     }
   </style>
 </head>
-<body data-theme="dark">
+<body data-theme="dark" data-glass="liquid">
   <div class="aurora-bg" id="auroraBg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-    <div class="theme-pattern" id="themePattern"></div>
   </div>
   <canvas id="snowCanvas"></canvas>
   <canvas id="fxCanvas"></canvas>
@@ -1074,6 +1186,7 @@
   <!-- ОСНОВНОЙ МЕССЕНДЖЕР -->
   <div id="appShell">
     <aside class="sidebar glass">
+      <div class="panel-pattern sidebar-pattern"></div>
       <div class="tg-topbar">
         <div class="tg-brand-left">
           <div class="tg-circle-logo">❄️</div>
@@ -1111,6 +1224,7 @@
     </aside>
 
     <main class="chat-pane glass" id="chatPane">
+      <div class="panel-pattern chat-pattern"></div>
       <div id="dropOverlay">
         <div style="font-size:48px;">📎</div>
         <div style="font-size:18px;font-weight:800;">Отпусти файл, чтобы прикрепить</div>
@@ -1746,10 +1860,45 @@
     // =========================================================================
     let currentTheme = localStorage.getItem('zima_theme') || 'dark';
     let customBgData = '';
+    let glassMode = localStorage.getItem('zima_glass_mode') || 'liquid'; // 'liquid' | 'transparent'
+    let uiTransparency = localStorage.getItem('zima_ui_trans') !== null ? Number(localStorage.getItem('zima_ui_trans')) : 70;
+    let uiBlur = localStorage.getItem('zima_ui_blur') !== null ? Number(localStorage.getItem('zima_ui_blur')) : 20;
+
+    function applyGlassSettings() {
+      uiTransparency = Math.max(0, Math.min(100, Number(uiTransparency) || 0));
+      uiBlur = Math.max(0, Math.min(100, Number(uiBlur) || 0));
+      localStorage.setItem('zima_glass_mode', glassMode);
+      localStorage.setItem('zima_ui_trans', String(uiTransparency));
+      localStorage.setItem('zima_ui_blur', String(uiBlur));
+
+      document.body.setAttribute('data-glass', glassMode);
+      const r = document.documentElement.style;
+      const t = uiTransparency / 100; // 0 = сплошной, 1 = максимальная прозрачность
+      const b = uiBlur / 100;         // 0 = 0px, 1 = максимальное размытие
+
+      const chatAlpha = (0.94 - t * 0.88).toFixed(3);      // при 70% -> 0.324, при 90% -> 0.148, при 100% -> 0.060
+      const sideAlpha = (0.95 - t * 0.74).toFixed(3);      // при 70% -> 0.432, при 90% -> 0.284, при 100% -> 0.210
+      const headAlpha = (0.96 - t * 0.48).toFixed(3);      // шапки чуть плотнее ради идеальной читаемости
+      const navAlpha  = (0.97 - t * 0.40).toFixed(3);
+
+      const chatBlurPx = (b * (glassMode === 'liquid' ? 20 : 16)).toFixed(1) + 'px';
+      const sideBlurPx = (b * (glassMode === 'liquid' ? 26 : 20)).toFixed(1) + 'px';
+      const headBlurPx = Math.max(6, b * 24).toFixed(1) + 'px';
+
+      r.setProperty('--chat-alpha', chatAlpha);
+      r.setProperty('--sidebar-alpha', sideAlpha);
+      r.setProperty('--header-alpha', headAlpha);
+      r.setProperty('--nav-alpha', navAlpha);
+      r.setProperty('--chat-blur', chatBlurPx);
+      r.setProperty('--sidebar-blur', sideBlurPx);
+      r.setProperty('--header-blur', headBlurPx);
+      r.setProperty('--glass-sat', glassMode === 'liquid' ? '180%' : '110%');
+    }
 
     async function loadStoredMediaAssets() {
       customBgData = await idbGet('custom_bg') || localStorage.getItem('zima_custom_bg') || '';
       customRingtoneData = await idbGet('custom_ringtone') || '';
+      applyGlassSettings();
       applyTheme(currentTheme);
     }
 
@@ -1766,7 +1915,9 @@
         bg.style.backgroundImage = '';
         bg.classList.remove('custom-photo');
       }
+      applyGlassSettings();
     }
+    applyGlassSettings();
 
     // Иконка ZIMA для системных уведомлений и PWA-ярлыка
     let zimaIconUrl = '';
@@ -2259,7 +2410,7 @@
           snowCtx.font = '14px monospace';
           for (let i = 0; i < matrixDrops.length; i++) {
             const ch = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
-            snowCtx.fillStyle = Math.random() > 0.92 ? '#bbf7d0' : 'rgba(34, 197, 94, 0.65)';
+            snowCtx.fillStyle = Math.random() > 0.90 ? '#dcfce7' : 'rgba(74, 222, 128, 0.82)';
             snowCtx.fillText(ch, i * 20, matrixDrops[i] * 20);
             if (matrixDrops[i] * 20 > H && Math.random() > 0.975) matrixDrops[i] = 0;
             matrixDrops[i] += 0.7;
@@ -2294,7 +2445,7 @@
             if (p.y > H + 12) { p.y = -12; p.x = Math.random() * W; }
             if (p.x > W + 12) p.x = -12;
             snowCtx.save(); snowCtx.translate(p.x, p.y); snowCtx.rotate(p.rot);
-            snowCtx.fillStyle = 'rgba(249, 168, 212, 0.58)';
+            snowCtx.fillStyle = 'rgba(249, 168, 212, 0.78)';
             snowCtx.beginPath(); snowCtx.ellipse(0, 0, p.r, p.r * 0.55, 0, 0, Math.PI * 2); snowCtx.fill();
             snowCtx.restore();
           }
@@ -2311,7 +2462,7 @@
           for (const b of bubbles) {
             b.y += b.vy; b.x += Math.sin(bgTick * 0.025 + b.ph) * 0.45;
             if (b.y < -14) { b.y = H + 14; b.x = Math.random() * W; }
-            snowCtx.strokeStyle = 'rgba(125, 211, 252, 0.32)'; snowCtx.lineWidth = 1.2;
+            snowCtx.strokeStyle = 'rgba(125, 211, 252, 0.52)'; snowCtx.lineWidth = 1.5;
             snowCtx.beginPath(); snowCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2); snowCtx.stroke();
           }
         } else if (currentTheme === 'aurora') {
@@ -2322,7 +2473,7 @@
               const y = baseY + Math.sin(x * 0.004 + bgTick * 0.012 + r * 2) * 48 + Math.cos(x * 0.009 - bgTick * 0.008) * 22;
               if (x === 0) snowCtx.moveTo(x, y); else snowCtx.lineTo(x, y);
             }
-            snowCtx.strokeStyle = r === 0 ? 'rgba(52, 211, 153, 0.16)' : 'rgba(56, 189, 248, 0.14)';
+            snowCtx.strokeStyle = r === 0 ? 'rgba(52, 211, 153, 0.28)' : 'rgba(56, 189, 248, 0.25)';
             snowCtx.lineWidth = 44; snowCtx.stroke();
           }
           for (const s of flakes) { s.y+=s.vy; s.x+=s.vx; if (s.y>H+5){s.y=-5;s.x=Math.random()*W;} snowCtx.beginPath(); snowCtx.arc(s.x,s.y,s.r,0,Math.PI*2); snowCtx.fillStyle=`rgba(167,243,208,${s.a})`; snowCtx.fill(); }
@@ -2339,7 +2490,7 @@
             for (let j = i + 1; j < netNodes.length; j++) {
               const dx = netNodes[i].x - netNodes[j].x, dy = netNodes[i].y - netNodes[j].y, d2 = dx*dx + dy*dy;
               if (d2 < 19000) {
-                snowCtx.strokeStyle = `rgba(56, 189, 248, ${(1 - d2 / 19000) * 0.24})`;
+                snowCtx.strokeStyle = `rgba(56, 189, 248, ${(1 - d2 / 19000) * 0.42})`;
                 snowCtx.beginPath(); snowCtx.moveTo(netNodes[i].x, netNodes[i].y); snowCtx.lineTo(netNodes[j].x, netNodes[j].y); snowCtx.stroke();
               }
             }
@@ -2957,6 +3108,37 @@
           <div style="padding:6px; display:flex; flex-direction:column; gap:12px;">
             ${backBtnHtml}
             <div class="bot-card">
+              <div style="font-weight:800; margin-bottom:8px;">🫧 Стиль стекла и видимость темы</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-bottom:12px;">
+                <button class="glass-btn ${glassMode==='liquid'?'btn-primary':''}" data-gmode="liquid" style="font-size:12.5px;padding:8px;">🫧 Жидкое стекло</button>
+                <button class="glass-btn ${glassMode==='transparent'?'btn-primary':''}" data-gmode="transparent" style="font-size:12.5px;padding:8px;">🪟 Прозрачность</button>
+              </div>
+
+              <div style="margin-bottom:10px;">
+                <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:5px;">
+                  <span>Прозрачность чата и меню</span>
+                  <b id="transValLbl" style="color:var(--accent);">${uiTransparency}%</b>
+                </div>
+                <input type="range" class="zima-range" id="transSlider" min="0" max="100" value="${uiTransparency}" />
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:5px;">
+                  <span>Размытие (Blur)</span>
+                  <b id="blurValLbl" style="color:var(--accent);">${uiBlur}%</b>
+                </div>
+                <input type="range" class="zima-range" id="blurSlider" min="0" max="100" value="${uiBlur}" />
+              </div>
+
+              <div class="preset-pills">
+                <button class="preset-pill" data-preset="50,15">50%</button>
+                <button class="preset-pill" data-preset="70,20">70% (База)</button>
+                <button class="preset-pill" data-preset="90,10">90%</button>
+                <button class="preset-pill" data-preset="75,60">Стекло+</button>
+              </div>
+            </div>
+
+            <div class="bot-card">
               <div style="font-weight:800; margin-bottom:10px;">🎨 Темы, узоры и живые фоны</div>
               <div class="theme-grid">
                 ${themes.map(([id, lbl]) => `<button class="theme-card ${currentTheme===id?'active':''}" data-th="${id}">${lbl}</button>`).join('')}
@@ -2970,6 +3152,28 @@
           </div>
         `;
         box.querySelector('#profBackBtn').onclick = () => { profileSettingsView='menu'; renderSidebar(); };
+        box.querySelectorAll('[data-gmode]').forEach(b => b.onclick = () => {
+          glassMode = b.dataset.gmode; applyGlassSettings(); renderSidebar();
+        });
+        const tSl = box.querySelector('#transSlider'), bSl = box.querySelector('#blurSlider');
+        tSl.oninput = () => {
+          uiTransparency = Number(tSl.value);
+          box.querySelector('#transValLbl').textContent = uiTransparency + '%';
+          applyGlassSettings();
+        };
+        bSl.oninput = () => {
+          uiBlur = Number(bSl.value);
+          box.querySelector('#blurValLbl').textContent = uiBlur + '%';
+          applyGlassSettings();
+        };
+        box.querySelectorAll('[data-preset]').forEach(p => p.onclick = () => {
+          const [pt, pb] = p.dataset.preset.split(',').map(Number);
+          uiTransparency = pt; uiBlur = pb;
+          tSl.value = pt; bSl.value = pb;
+          box.querySelector('#transValLbl').textContent = pt + '%';
+          box.querySelector('#blurValLbl').textContent = pb + '%';
+          applyGlassSettings();
+        });
         box.querySelectorAll('[data-th]').forEach(b => b.onclick = () => { applyTheme(b.dataset.th); renderSidebar(); });
         box.querySelector('#uploadThemeBtn').onclick = () => box.querySelector('#customThemeFile').click();
         box.querySelector('#customThemeFile').onchange = async (e) => {
