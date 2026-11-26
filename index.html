@@ -4300,23 +4300,21 @@
     }
 
     tryAutoLogin();
-	// =========================================================================
-    // 19. МОДУЛЬ: СВОРАЧИВАНИЕ ЗВОНКА + ЖИВЫЕ ФИЛЬТРЫ ГОЛОСА (WEBRTC DSP)
+	  // =========================================================================
+    // 19. МОДУЛЬ v2: СВОРАЧИВАНИЕ + ФИЛЬТРЫ (БУРУНДУК!) + ВИДЕО/ЭКРАН + КОМНАТЫ ГРУПП
     // =========================================================================
-    (function initCallEnhanceModule() {
-      // 1. Стили для верхней плашки, кнопки сворачивания и шестерёнки фильтров
+    (function initZimaCallsPro() {
       const st = document.createElement('style');
       st.textContent = `
         body.call-minimized #appShell { padding-top: 52px; }
         @media (max-width: 820px) { body.call-minimized #appShell { padding-top: 44px; } }
 
         #callMiniBar {
-          position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 1250;
+          position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 1350;
           display: none; align-items: center; justify-content: space-between;
           padding: 0 14px; gap: 10px; color: #fff; cursor: pointer;
           background: linear-gradient(90deg, #16a34a, #15803d, #166534);
-          box-shadow: 0 4px 20px rgba(0,0,0,0.45);
-          font-size: 13.5px; font-weight: 700;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.45); font-size: 13.5px; font-weight: 700;
         }
         .mini-call-btn {
           width: 32px; height: 32px; border-radius: 50%; border: none;
@@ -4327,165 +4325,153 @@
         .mini-call-btn.mic.off { background: #fff; color: #0f172a; }
         .mini-call-btn.end { background: #ef4444; }
 
-        #callMinimizeBtn {
-          position: absolute; top: 18px; right: 18px;
+        .call-min-btn {
+          position: absolute; top: 18px; right: 18px; z-index: 15;
           width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.22);
           background: rgba(255,255,255,0.12); color: #fff; font-size: 18px;
           cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-        #callMinimizeBtn:hover { background: rgba(255,255,255,0.24); }
+        .call-min-btn:hover { background: rgba(255,255,255,0.24); }
 
-        #callGearBtn {
-          position: absolute; bottom: 44px; right: 22px;
+        .call-gear-btn {
+          position: absolute; bottom: 44px; right: 20px; z-index: 15;
           width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.22);
           background: rgba(255,255,255,0.14); color: #fff; font-size: 20px;
           cursor: pointer; display: flex; align-items: center; justify-content: center;
-          transition: transform 0.2s, background 0.2s;
         }
-        #callGearBtn.active-fx { background: #2aabee; border-color: #7dd3fc; box-shadow: 0 0 18px rgba(42,171,238,0.7); }
+        .call-gear-btn.active-fx { background: #2aabee; border-color: #7dd3fc; box-shadow: 0 0 18px rgba(42,171,238,0.75); }
 
-        #callFilterMenu {
-          position: absolute; bottom: 102px; right: 18px; width: 235px;
+        .call-filter-menu {
+          position: absolute; bottom: 102px; right: 18px; width: 240px; z-index: 25;
           border-radius: 20px; padding: 12px; display: none; flex-direction: column; gap: 6px;
-          background: rgba(15, 23, 42, 0.94); border: 1px solid rgba(255,255,255,0.18);
-          backdrop-filter: blur(18px); text-align: left; z-index: 1260;
-          box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+          background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255,255,255,0.18);
+          backdrop-filter: blur(18px); text-align: left; box-shadow: 0 12px 35px rgba(0,0,0,0.6);
         }
         .cf-item {
           width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06);
-          color: #fff; padding: 9px 11px; border-radius: 12px; font-size: 13px; font-weight: 600;
+          color: #fff; padding: 8px 11px; border-radius: 12px; font-size: 13px; font-weight: 600;
           cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between;
         }
         .cf-item:hover { background: rgba(255,255,255,0.14); }
         .cf-item.active { background: rgba(42,171,238,0.32); border-color: #38bdf8; }
+
+        /* Видео-слой в 1-на-1 звонке */
+        #remoteVideoStage {
+          position: absolute; inset: 0; z-index: 1; display: none; background: #020617;
+        }
+        #remoteCallVideo { width: 100%; height: 100%; object-fit: contain; }
+        #localVideoPip {
+          position: absolute; top: 72px; right: 18px; width: 155px; height: 112px; z-index: 12;
+          border-radius: 16px; overflow: hidden; display: none; background: #0f172a;
+          border: 2px solid rgba(255,255,255,0.28); box-shadow: 0 10px 28px rgba(0,0,0,0.55);
+        }
+        #localCallVideo { width: 100%; height: 100%; object-fit: cover; }
+        #localVideoPip span {
+          position: absolute; bottom: 5px; left: 8px; font-size: 11px; font-weight: 700;
+          background: rgba(0,0,0,0.55); padding: 2px 7px; border-radius: 999px; color: #fff;
+        }
+        #callOverlay > :not(#remoteVideoStage) { position: relative; z-index: 5; }
+        #callOverlay.video-active .call-avatar-pulse { display: none; }
+
+        /* Баннер активной голосовой комнаты в группе */
+        #groupCallBanner {
+          display: none; align-items: center; justify-content: space-between; gap: 10px;
+          padding: 9px 14px; background: linear-gradient(90deg, rgba(22,163,74,0.28), rgba(14,165,233,0.25));
+          border-bottom: 1px solid rgba(52,211,153,0.4); font-size: 13px; flex-shrink: 0;
+        }
+
+        /* Оверлей групповой голосовой комнаты */
+        #groupCallOverlay {
+          position: fixed; inset: 0; z-index: 1220; display: none;
+          flex-direction: column; align-items: center; justify-content: space-between;
+          padding: 28px 18px 40px; color: #fff; text-align: center;
+          background: radial-gradient(circle at 50% 20%, rgba(20, 45, 95, 0.96), rgba(7, 11, 24, 0.99));
+          backdrop-filter: blur(24px);
+        }
+        .grp-peers-grid {
+          display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+          gap: 14px; width: 100%; max-width: 720px; max-height: 58dvh; overflow-y: auto; padding: 10px;
+        }
+        .grp-peer-card {
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+          border-radius: 20px; padding: 16px 10px; display: flex; flex-direction: column;
+          align-items: center; gap: 8px;
+        }
       `;
       document.head.appendChild(st);
 
-      // 2. Верхняя зелёная плашка свёрнутого звонка
-      const miniBar = document.createElement('div');
-      miniBar.id = 'callMiniBar';
-      miniBar.innerHTML = `
-        <button class="mini-call-btn mic" id="miniCallMicBtn" title="Микрофон">🎤</button>
-        <div id="miniCallLabel" style="flex:1; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Звонок • 00:00</div>
-        <button class="mini-call-btn end" id="miniCallEndBtn" title="Завершить">📵</button>
-      `;
-      document.body.appendChild(miniBar);
-
-      // 3. Кнопка сворачивания, шестерёнка и меню фильтров внутри #callOverlay
-      const overlay = document.getElementById('callOverlay');
-      const minBtn = document.createElement('button');
-      minBtn.id = 'callMinimizeBtn'; minBtn.title = 'Свернуть звонок'; minBtn.textContent = '↙️';
-      overlay.appendChild(minBtn);
-
-      const gearBtn = document.createElement('button');
-      gearBtn.id = 'callGearBtn'; gearBtn.title = 'Фильтр голоса'; gearBtn.textContent = '⚙️';
-      overlay.appendChild(gearBtn);
-
-      const filterMenu = document.createElement('div');
-      filterMenu.id = 'callFilterMenu';
       const LIVE_FILTERS = [
-        ['normal', '🎙️ Обычный голос'],
-        ['robot',  '🤖 Робот'],
-        ['demon',  '👹 Демон (низкий)'],
-        ['echo',   '🌌 Космос (эхо)'],
-        ['radio',  '📻 Рация'],
-        ['mega',   '📢 Мегафон']
+        ['normal',   '🎙️ Обычный голос'],
+        ['chipmunk', '🐿️ Бурундук'],
+        ['demon',    '👹 Демон'],
+        ['robot',    '🤖 Робот'],
+        ['echo',     '🌌 Космос (эхо)'],
+        ['radio',    '📻 Рация'],
+        ['mega',     '📢 Мегафон']
       ];
-      filterMenu.innerHTML = `<div style="font-size:11.5px;font-weight:800;color:#93c5fd;margin-bottom:2px;">🎛 ФИЛЬТР ДЛЯ СОБЕСЕДНИКА</div>` +
-        LIVE_FILTERS.map(([id, lbl]) => `<button class="cf-item ${id==='normal'?'active':''}" data-cf="${id}"><span>${lbl}</span><span></span></button>`).join('');
-      overlay.appendChild(filterMenu);
 
-      // 4. Состояние сворачивания и Web Audio DSP-цепочки
-      let isMinimized = false;
-      let currentLiveFx = 'normal';
-      let dspCleanup = null;
-
-      function setMinimized(val) {
-        isMinimized = val;
-        if (val && activeCall) {
-          overlay.style.display = 'none';
-          filterMenu.style.display = 'none';
-          miniBar.style.display = 'flex';
-          document.body.classList.add('call-minimized');
-        } else {
-          miniBar.style.display = 'none';
-          document.body.classList.remove('call-minimized');
-          if (activeCall) overlay.style.display = 'flex';
-        }
+      // -----------------------------------------------------------------------
+      // A. ЖИВОЙ PITCH SHIFTER (ДЛЯ БУРУНДУКА И ДЕМОНА) + DSP-ЦЕПОЧКА
+      // -----------------------------------------------------------------------
+      function createPitchShifterNode(ctx, pitchRatio) {
+        const bufSize = 2048, delaySize = 4096, win = 1024;
+        const ring = new Float32Array(delaySize);
+        let writeIdx = 0, phase = 0;
+        const proc = ctx.createScriptProcessor(bufSize, 1, 1);
+        proc.onaudioprocess = (ev) => {
+          const inp = ev.inputBuffer.getChannelData(0);
+          const out = ev.outputBuffer.getChannelData(0);
+          const rate = (1 - pitchRatio) / win;
+          for (let i = 0; i < inp.length; i++) {
+            ring[writeIdx] = inp[i];
+            const p1 = phase, p2 = (phase + 0.5) % 1;
+            const r1 = (writeIdx - (p1 * win + 64) + delaySize * 2) % delaySize;
+            const r2 = (writeIdx - (p2 * win + 64) + delaySize * 2) % delaySize;
+            const i1 = Math.floor(r1), f1 = r1 - i1;
+            const i2 = Math.floor(r2), f2 = r2 - i2;
+            const s1 = ring[i1] * (1 - f1) + ring[(i1 + 1) % delaySize] * f1;
+            const s2 = ring[i2] * (1 - f2) + ring[(i2 + 1) % delaySize] * f2;
+            out[i] = s1 * (1 - Math.abs(2 * p1 - 1)) + s2 * (1 - Math.abs(2 * p2 - 1));
+            phase = (phase + rate) % 1;
+            if (phase < 0) phase += 1;
+            writeIdx = (writeIdx + 1) % delaySize;
+          }
+        };
+        return proc;
       }
 
-      minBtn.onclick = (e) => { e.stopPropagation(); setMinimized(true); };
-      miniBar.onclick = (e) => {
-        if (e.target.closest('button')) return;
-        setMinimized(false);
-      };
-      document.getElementById('miniCallEndBtn').onclick = (e) => {
-        e.stopPropagation();
-        setMinimized(false);
-        endCurrentCall(true, activeCall?.startTs ? 'ended' : 'missed');
-      };
-      document.getElementById('miniCallMicBtn').onclick = (e) => {
-        e.stopPropagation();
-        if (!activeCall?.localStream) return;
-        activeCall.micMuted = !activeCall.micMuted;
-        activeCall.localStream.getAudioTracks().forEach(t => t.enabled = !activeCall.micMuted);
-        const mainMic = document.getElementById('btnToggleMic');
-        if (mainMic) { mainMic.classList.toggle('off', activeCall.micMuted); mainMic.textContent = activeCall.micMuted ? '🔇' : '🎤'; }
-        syncMiniUI();
-      };
-
-      gearBtn.onclick = (e) => {
-        e.stopPropagation();
-        filterMenu.style.display = filterMenu.style.display === 'flex' ? 'none' : 'flex';
-      };
-      overlay.addEventListener('click', (e) => {
-        if (!e.target.closest('#callFilterMenu') && !e.target.closest('#callGearBtn')) filterMenu.style.display = 'none';
-      });
-
-      // 5. Применение живого фильтра к исходящей аудиодорожке WebRTC
-      async function applyLiveCallFilter(fx) {
-        currentLiveFx = fx;
-        filterMenu.querySelectorAll('.cf-item').forEach(b => b.classList.toggle('active', b.dataset.cf === fx));
-        gearBtn.classList.toggle('active-fx', fx !== 'normal');
-        filterMenu.style.display = 'none';
-
-        if (!activeCall?.pc || !activeCall?.localStream) return showToast('Фильтр включится после соединения');
-        const sender = activeCall.pc.getSenders().find(s => s.track && s.track.kind === 'audio');
-        const rawTrack = activeCall.localStream.getAudioTracks()[0];
-        if (!sender || !rawTrack) return;
-
-        if (dspCleanup) { dspCleanup(); dspCleanup = null; }
-
-        if (fx === 'normal') {
-          await sender.replaceTrack(rawTrack);
-          showToast('🎙️ Обычный голос');
-          return;
-        }
-
+      function buildFilteredAudioTrack(rawTrack, fx) {
+        if (fx === 'normal') return { track: rawTrack, cleanup: null };
         unlockAudio();
         const src = audioCtx.createMediaStreamSource(new MediaStream([rawTrack]));
         const dest = audioCtx.createMediaStreamDestination();
         const extras = [];
         let node = src;
 
-        if (fx === 'robot') {
+        if (fx === 'chipmunk') {
+          const ps = createPitchShifterNode(audioCtx, 1.56);
+          const hi = audioCtx.createBiquadFilter(); hi.type = 'highshelf'; hi.frequency.value = 1800; hi.gain.value = 4;
+          node.connect(ps); ps.connect(hi); node = hi;
+          extras.push(ps);
+        } else if (fx === 'demon') {
+          const ps = createPitchShifterNode(audioCtx, 0.72);
+          const low = audioCtx.createBiquadFilter(); low.type = 'lowshelf'; low.frequency.value = 200; low.gain.value = 10;
+          const dist = audioCtx.createWaveShaper(); dist.curve = makeDistortionCurve(35);
+          node.connect(ps); ps.connect(low); low.connect(dist); node = dist;
+          extras.push(ps);
+        } else if (fx === 'robot') {
           const rg = audioCtx.createGain(); rg.gain.value = 0.5;
           const osc = audioCtx.createOscillator(), og = audioCtx.createGain();
           osc.type = 'sine'; osc.frequency.value = 58; og.gain.value = 0.5;
           osc.connect(og).connect(rg.gain); osc.start(); extras.push(osc);
           node.connect(rg); node = rg;
-        } else if (fx === 'demon') {
-          const low = audioCtx.createBiquadFilter(); low.type = 'lowshelf'; low.frequency.value = 210; low.gain.value = 14;
-          const hi = audioCtx.createBiquadFilter(); hi.type = 'lowpass'; hi.frequency.value = 1400;
-          const dist = audioCtx.createWaveShaper(); dist.curve = makeDistortionCurve(65);
-          node.connect(low); low.connect(hi); hi.connect(dist); node = dist;
         } else if (fx === 'echo') {
           const mix = audioCtx.createGain(), d = audioCtx.createDelay(), fb = audioCtx.createGain();
-          d.delayTime.value = 0.24; fb.gain.value = 0.5;
+          d.delayTime.value = 0.24; fb.gain.value = 0.48;
           node.connect(mix); node.connect(d); d.connect(fb); fb.connect(d); d.connect(mix); node = mix;
         } else if (fx === 'radio') {
           const bp = audioCtx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1550; bp.Q.value = 2.6;
-          const dist = audioCtx.createWaveShaper(); dist.curve = makeDistortionCurve(70);
+          const dist = audioCtx.createWaveShaper(); dist.curve = makeDistortionCurve(65);
           node.connect(bp); bp.connect(dist); node = dist;
         } else if (fx === 'mega') {
           const hp = audioCtx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 700;
@@ -4494,41 +4480,583 @@
         }
 
         node.connect(dest);
-        const filteredTrack = dest.stream.getAudioTracks()[0];
-        await sender.replaceTrack(filteredTrack);
-        dspCleanup = () => {
-          extras.forEach(o => { try { o.stop(); } catch {} });
-          try { src.disconnect(); } catch {}
-          filteredTrack.stop();
+        const outTrack = dest.stream.getAudioTracks()[0];
+        return {
+          track: outTrack,
+          cleanup: () => {
+            extras.forEach(x => { try { if (x.stop) x.stop(); if (x.disconnect) x.disconnect(); } catch {} });
+            try { src.disconnect(); } catch {}
+            try { outTrack.stop(); } catch {}
+          }
         };
-        showToast(`🎛 Фильтр включён: ${LIVE_FILTERS.find(x=>x[0]===fx)?.[1] || fx}`, '#38bdf8');
       }
 
-      filterMenu.querySelectorAll('.cf-item').forEach(b => {
-        b.onclick = () => applyLiveCallFilter(b.dataset.cf);
-      });
+      // -----------------------------------------------------------------------
+      // B. ОБЩАЯ ВЕРХНЯЯ ЗЕЛЁНАЯ ПЛАШКА + ЭЛЕМЕНТЫ 1-НА-1 ЗВОНКА
+      // -----------------------------------------------------------------------
+      const miniBar = document.createElement('div');
+      miniBar.id = 'callMiniBar';
+      miniBar.innerHTML = `
+        <button class="mini-call-btn mic" id="miniCallMicBtn" title="Микрофон">🎤</button>
+        <div id="miniCallLabel" style="flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Звонок • 00:00</div>
+        <button class="mini-call-btn end" id="miniCallEndBtn" title="Завершить">📵</button>
+      `;
+      document.body.appendChild(miniBar);
 
-      // 6. Синхронизация таймера, статуса и авто-сброс после завершения звонка
-      function syncMiniUI() {
-        if (!activeCall) {
-          if (isMinimized) setMinimized(false);
+      const overlay = document.getElementById('callOverlay');
+      const remoteStage = document.createElement('div');
+      remoteStage.id = 'remoteVideoStage';
+      remoteStage.innerHTML = `<video id="remoteCallVideo" autoplay playsinline></video>`;
+      overlay.prepend(remoteStage);
+
+      const localPip = document.createElement('div');
+      localPip.id = 'localVideoPip';
+      localPip.innerHTML = `<video id="localCallVideo" autoplay playsinline muted></video><span>Вы</span>`;
+      overlay.appendChild(localPip);
+
+      const minBtn = document.createElement('button');
+      minBtn.className = 'call-min-btn'; minBtn.title = 'Свернуть звонок'; minBtn.textContent = '↙️';
+      overlay.appendChild(minBtn);
+
+      const gearBtn = document.createElement('button');
+      gearBtn.className = 'call-gear-btn'; gearBtn.title = 'Фильтр голоса'; gearBtn.textContent = '⚙️';
+      overlay.appendChild(gearBtn);
+
+      const filterMenu = document.createElement('div');
+      filterMenu.className = 'call-filter-menu';
+      filterMenu.innerHTML = `<div style="font-size:11.5px;font-weight:800;color:#93c5fd;margin-bottom:2px;">🎛 ФИЛЬТР ДЛЯ СОБЕСЕДНИКА</div>` +
+        LIVE_FILTERS.map(([id, lbl]) => `<button class="cf-item ${id==='normal'?'active':''}" data-cf="${id}"><span>${lbl}</span></button>`).join('');
+      overlay.appendChild(filterMenu);
+
+      // Состояние 1-на-1 звонка (видео / экран / фильтры)
+      let isMinimized = false;
+      let currentLiveFx = 'normal';
+      let dspCleanup = null;
+      let localVideoStream = null;
+      let localVideoMode = 'off'; // off | camera | screen
+      let hookedCallId = null;
+      let renegUnsubs = [];
+      let lastRenegTs = 0;
+
+      function setMinimized(val) {
+        isMinimized = val;
+        if (val && (activeCall || groupRoom)) {
+          overlay.style.display = 'none';
+          groupOverlay.style.display = 'none';
+          filterMenu.style.display = 'none';
+          grpFilterMenu.style.display = 'none';
+          miniBar.style.display = 'flex';
+          document.body.classList.add('call-minimized');
+        } else {
+          miniBar.style.display = 'none';
+          document.body.classList.remove('call-minimized');
+          if (activeCall) overlay.style.display = 'flex';
+          else if (groupRoom) groupOverlay.style.display = 'flex';
+        }
+      }
+
+      minBtn.onclick = (e) => { e.stopPropagation(); setMinimized(true); };
+      miniBar.onclick = (e) => { if (!e.target.closest('button')) setMinimized(false); };
+      document.getElementById('miniCallEndBtn').onclick = (e) => {
+        e.stopPropagation(); setMinimized(false);
+        if (groupRoom) leaveGroupRoom();
+        else if (activeCall) endCurrentCall(true, activeCall.startTs ? 'ended' : 'missed');
+      };
+      document.getElementById('miniCallMicBtn').onclick = (e) => {
+        e.stopPropagation();
+        if (groupRoom) { toggleGroupMic(); return; }
+        if (!activeCall?.localStream) return;
+        activeCall.micMuted = !activeCall.micMuted;
+        activeCall.localStream.getAudioTracks().forEach(t => t.enabled = !activeCall.micMuted);
+        const mm = document.getElementById('btnToggleMic');
+        if (mm) { mm.classList.toggle('off', activeCall.micMuted); mm.textContent = activeCall.micMuted ? '🔇' : '🎤'; }
+        syncAllCallUI();
+      };
+
+      gearBtn.onclick = (e) => { e.stopPropagation(); filterMenu.style.display = filterMenu.style.display === 'flex' ? 'none' : 'flex'; };
+      overlay.addEventListener('click', (e) => { if (!e.target.closest('.call-filter-menu') && !e.target.closest('.call-gear-btn')) filterMenu.style.display = 'none'; });
+
+      async function apply1to1Filter(fx) {
+        currentLiveFx = fx;
+        filterMenu.querySelectorAll('.cf-item').forEach(b => b.classList.toggle('active', b.dataset.cf === fx));
+        gearBtn.classList.toggle('active-fx', fx !== 'normal');
+        filterMenu.style.display = 'none';
+        if (!activeCall?.pc || !activeCall?.localStream) return showToast('Фильтр включится после соединения');
+        const sender = activeCall.pc.getSenders().find(s => s.track?.kind === 'audio');
+        const raw = activeCall.localStream.getAudioTracks()[0];
+        if (!sender || !raw) return;
+        if (dspCleanup) { dspCleanup(); dspCleanup = null; }
+        const res = buildFilteredAudioTrack(raw, fx);
+        dspCleanup = res.cleanup;
+        await sender.replaceTrack(res.track);
+        showToast(`🎛 ${LIVE_FILTERS.find(x=>x[0]===fx)?.[1]}`, '#38bdf8');
+      }
+      filterMenu.querySelectorAll('.cf-item').forEach(b => b.onclick = () => apply1to1Filter(b.dataset.cf));
+
+      // Видео и демонстрация экрана в 1-на-1 звонке
+      async function stopLocalVideo(notify = true) {
+        if (localVideoStream) { localVideoStream.getTracks().forEach(t => t.stop()); localVideoStream = null; }
+        localVideoMode = 'off';
+        localPip.style.display = 'none';
+        document.getElementById('localCallVideo').srcObject = null;
+        if (activeCall?.pc) {
+          const vs = activeCall.pc.getSenders().find(s => s._zimaVideo || s.track?.kind === 'video');
+          if (vs) vs.replaceTrack(null).catch(()=>{});
+        }
+        if (notify && activeCall?.callId) {
+          set(ref(db, `calls/${activeCall.callId}/videoState/${currentUser.uid}`), 'off').catch(()=>{});
+        }
+        updateVideoControlButtons();
+      }
+
+      async function toggle1to1Video(mode) {
+        if (!activeCall?.pc) return showToast('Дождись соединения звонка');
+        if (localVideoMode === mode) { await stopLocalVideo(true); return; }
+        await stopLocalVideo(false);
+
+        let stream;
+        try {
+          if (mode === 'camera') stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 } } });
+          else stream = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 24 }, audio: false });
+        } catch { return showToast(mode === 'camera' ? 'Нет доступа к камере' : 'Демонстрация отменена', '#fb7185'); }
+
+        const vTrack = stream.getVideoTracks()[0];
+        vTrack.onended = () => stopLocalVideo(true);
+        localVideoStream = stream;
+        localVideoMode = mode;
+        document.getElementById('localCallVideo').srcObject = stream;
+        localPip.style.display = 'block';
+
+        const pc = activeCall.pc;
+        let vSender = pc.getSenders().find(s => s._zimaVideo || s.track?.kind === 'video');
+        let needReneg = false;
+        if (vSender) {
+          await vSender.replaceTrack(vTrack);
+        } else {
+          vSender = pc.addTrack(vTrack, stream);
+          vSender._zimaVideo = true;
+          needReneg = true;
+        }
+        if (needReneg) {
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+          await set(ref(db, `calls/${activeCall.callId}/reneg`), {
+            from: currentUser.uid, offer: { type: offer.type, sdp: offer.sdp }, ts: Date.now()
+          });
+        }
+        await set(ref(db, `calls/${activeCall.callId}/videoState/${currentUser.uid}`), mode);
+        updateVideoControlButtons();
+      }
+
+      function updateVideoControlButtons() {
+        const camB = document.getElementById('btnToggleCam');
+        const scrB = document.getElementById('btnToggleScreen');
+        if (camB) camB.classList.toggle('off', localVideoMode === 'camera');
+        if (scrB) scrB.classList.toggle('off', localVideoMode === 'screen');
+      }
+
+      function ensure1to1VideoButtons() {
+        if (!activeCall?.pc) return;
+        const ctrl = document.getElementById('callControls');
+        if (!ctrl || document.getElementById('btnToggleCam')) return;
+        const camBtn = document.createElement('button');
+        camBtn.id = 'btnToggleCam'; camBtn.className = 'call-btn ctrl'; camBtn.title = 'Камера'; camBtn.textContent = '📹';
+        camBtn.onclick = () => toggle1to1Video('camera');
+
+        const scrBtn = document.createElement('button');
+        scrBtn.id = 'btnToggleScreen'; scrBtn.className = 'call-btn ctrl'; scrBtn.title = 'Демонстрация экрана'; scrBtn.textContent = '🖥️';
+        scrBtn.onclick = () => toggle1to1Video('screen');
+
+        const spkBtn = document.getElementById('btnToggleSpk');
+        if (spkBtn) { ctrl.insertBefore(camBtn, spkBtn); ctrl.insertBefore(scrBtn, spkBtn); }
+        else { ctrl.appendChild(camBtn); ctrl.appendChild(scrBtn); }
+        updateVideoControlButtons();
+      }
+
+      function hook1to1Connection(call) {
+        hookedCallId = call.callId;
+        lastRenegTs = 0;
+        renegUnsubs.forEach(u => u && u()); renegUnsubs = [];
+
+        call.pc.addEventListener('track', (ev) => {
+          if (ev.track.kind === 'video') {
+            const rv = document.getElementById('remoteCallVideo');
+            rv.srcObject = ev.streams[0] || new MediaStream([ev.track]);
+            rv.play().catch(()=>{});
+            remoteStage.style.display = 'block';
+            overlay.classList.add('video-active');
+          }
+        });
+
+        const uReneg = onValue(ref(db, `calls/${call.callId}/reneg`), async (snap) => {
+          const r = snap.val();
+          if (!r || !activeCall || activeCall.callId !== call.callId) return;
+          if (r.offer && r.from !== currentUser.uid && r.ts !== lastRenegTs) {
+            lastRenegTs = r.ts;
+            try {
+              await call.pc.setRemoteDescription(new RTCSessionDescription(r.offer));
+              const ans = await call.pc.createAnswer();
+              await call.pc.setLocalDescription(ans);
+              await update(ref(db, `calls/${call.callId}/reneg`), {
+                answer: { type: ans.type, sdp: ans.sdp }, answerFrom: currentUser.uid, ansTs: Date.now()
+              });
+            } catch (e) { console.error('Reneg offer err:', e); }
+          } else if (r.answer && r.answerFrom !== currentUser.uid && call.pc.signalingState === 'have-local-offer') {
+            try { await call.pc.setRemoteDescription(new RTCSessionDescription(r.answer)); } catch {}
+          }
+        });
+
+        const uVst = onValue(ref(db, `calls/${call.callId}/videoState/${call.peerUid}`), (s) => {
+          const v = s.val();
+          if (!v || v === 'off') {
+            remoteStage.style.display = 'none';
+            overlay.classList.remove('video-active');
+          } else {
+            remoteStage.style.display = 'block';
+            overlay.classList.add('video-active');
+          }
+        });
+        renegUnsubs = [uReneg, uVst];
+      }
+
+      // -----------------------------------------------------------------------
+      // C. ГОЛОСОВЫЕ КОМНАТЫ В ГРУППАХ (MESH WEBRTC, ЖИВЁТ ПОКА >= 2 УЧАСТНИКОВ)
+      // -----------------------------------------------------------------------
+      const groupBanner = document.createElement('div');
+      groupBanner.id = 'groupCallBanner';
+      const msgArea = document.getElementById('messagesArea');
+      msgArea.parentNode.insertBefore(groupBanner, msgArea);
+
+      const groupOverlay = document.createElement('div');
+      groupOverlay.id = 'groupCallOverlay';
+      groupOverlay.innerHTML = `
+        <button class="call-min-btn" id="grpMinBtn" title="Свернуть">↙️</button>
+        <div>
+          <div style="font-size:12px;color:#34d399;font-weight:800;letter-spacing:1px;">● ГОЛОСОВАЯ КОМНАТА ГРУППЫ</div>
+          <h2 id="grpCallTitle" style="font-size:22px;margin-top:4px;">Группа</h2>
+          <div id="grpCallSub" style="font-size:13px;color:#93c5fd;margin-top:3px;">00:00</div>
+        </div>
+        <div class="grp-peers-grid" id="grpPeersGrid"></div>
+        <div class="call-controls">
+          <button class="call-btn ctrl" id="grpMicBtn" title="Микрофон">🎤</button>
+          <button class="call-btn decline" id="grpLeaveBtn" title="Выйти из комнаты">📵</button>
+        </div>
+        <button class="call-gear-btn" id="grpGearBtn" title="Фильтр голоса">⚙️</button>
+        <div class="call-filter-menu" id="grpFilterMenu">
+          <div style="font-size:11.5px;font-weight:800;color:#93c5fd;margin-bottom:2px;">🎛 ФИЛЬТР В КОМНАТЕ</div>
+          ${LIVE_FILTERS.map(([id, lbl]) => `<button class="cf-item ${id==='normal'?'active':''}" data-gcf="${id}"><span>${lbl}</span></button>`).join('')}
+        </div>
+        <div id="grpAudioPool" style="display:none;"></div>
+      `;
+      document.body.appendChild(groupOverlay);
+
+      const grpGearBtn = document.getElementById('grpGearBtn');
+      const grpFilterMenu = document.getElementById('grpFilterMenu');
+      document.getElementById('grpMinBtn').onclick = (e) => { e.stopPropagation(); setMinimized(true); };
+      document.getElementById('grpLeaveBtn').onclick = () => leaveGroupRoom();
+      document.getElementById('grpMicBtn').onclick = () => toggleGroupMic();
+      grpGearBtn.onclick = (e) => { e.stopPropagation(); grpFilterMenu.style.display = grpFilterMenu.style.display === 'flex' ? 'none' : 'flex'; };
+      groupOverlay.addEventListener('click', (e) => { if (!e.target.closest('#grpFilterMenu') && !e.target.closest('#grpGearBtn')) grpFilterMenu.style.display = 'none'; });
+
+      let groupRoom = null; // { groupId, name, localStream, filteredTrack, dspCleanup, fx, micMuted, pcs:{}, audios:{}, unsubs:[], timerIv, startTs, closeTimer }
+      let watchedBannerGroupId = null, bannerUnsub = null;
+
+      function toggleGroupMic() {
+        if (!groupRoom) return;
+        groupRoom.micMuted = !groupRoom.micMuted;
+        groupRoom.localStream.getAudioTracks().forEach(t => t.enabled = !groupRoom.micMuted);
+        const b = document.getElementById('grpMicBtn');
+        b.classList.toggle('off', groupRoom.micMuted);
+        b.textContent = groupRoom.micMuted ? '🔇' : '🎤';
+        syncAllCallUI();
+      }
+
+      async function applyGroupFilter(fx) {
+        if (!groupRoom) return;
+        groupRoom.fx = fx;
+        grpFilterMenu.querySelectorAll('.cf-item').forEach(b => b.classList.toggle('active', b.dataset.gcf === fx));
+        grpGearBtn.classList.toggle('active-fx', fx !== 'normal');
+        grpFilterMenu.style.display = 'none';
+
+        if (groupRoom.dspCleanup) { groupRoom.dspCleanup(); groupRoom.dspCleanup = null; }
+        const raw = groupRoom.localStream.getAudioTracks()[0];
+        const res = buildFilteredAudioTrack(raw, fx);
+        groupRoom.filteredTrack = res.track;
+        groupRoom.dspCleanup = res.cleanup;
+
+        for (const pc of Object.values(groupRoom.pcs)) {
+          const sender = pc.getSenders().find(s => s.track?.kind === 'audio');
+          if (sender) await sender.replaceTrack(res.track).catch(()=>{});
+        }
+        showToast(`🎛 Фильтр в комнате: ${LIVE_FILTERS.find(x=>x[0]===fx)?.[1]}`, '#38bdf8');
+      }
+      grpFilterMenu.querySelectorAll('.cf-item').forEach(b => b.onclick = () => applyGroupFilter(b.dataset.gcf));
+
+      async function joinOrCreateGroupRoom(groupId) {
+        if (activeCall) return showToast('Сначала заверши личный звонок!');
+        if (groupRoom) {
+          if (groupRoom.groupId === groupId) { setMinimized(false); return; }
+          await leaveGroupRoom();
+        }
+        const g = groupsMap[groupId];
+        if (!g) return;
+        if (!navigator.mediaDevices?.getUserMedia) return showToast('Нужен HTTPS для микрофона', '#fb7185');
+
+        let stream;
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation:true, noiseSuppression:true, autoGainControl:true } });
+        } catch { return showToast('Разреши доступ к микрофону!', '#fb7185'); }
+
+        const rawTrack = stream.getAudioTracks()[0];
+        groupRoom = {
+          groupId, name: g.name, localStream: stream, filteredTrack: rawTrack, dspCleanup: null,
+          fx: 'normal', micMuted: false, pcs: {}, audios: {}, unsubs: [],
+          startTs: Date.now(), closeTimer: null, timerIv: null
+        };
+
+        const myPartRef = ref(db, `groupCalls/${groupId}/participants/${currentUser.uid}`);
+        await set(myPartRef, { uid: currentUser.uid, joinedAt: Date.now() });
+        onDisconnect(myPartRef).remove();
+        await update(ref(db, `users/${currentUser.uid}`), { inCall: true });
+
+        document.getElementById('grpCallTitle').textContent = g.name;
+        document.getElementById('grpMicBtn').classList.remove('off');
+        document.getElementById('grpMicBtn').textContent = '🎤';
+        grpGearBtn.classList.remove('active-fx');
+        grpFilterMenu.querySelectorAll('.cf-item').forEach(b => b.classList.toggle('active', b.dataset.gcf === 'normal'));
+        groupOverlay.style.display = 'flex';
+        setMinimized(false);
+
+        groupRoom.timerIv = setInterval(() => {
+          if (!groupRoom) return;
+          const s = Math.floor((Date.now() - groupRoom.startTs) / 1000);
+          const cnt = Object.keys(groupRoom.pcs).length + 1;
+          document.getElementById('grpCallSub').textContent = `${cnt} уч. • ${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+        }, 500);
+
+        const uRoom = onValue(ref(db, `groupCalls/${groupId}`), async (snap) => {
+          if (!groupRoom || groupRoom.groupId !== groupId) return;
+          const roomData = snap.val() || {};
+          const parts = roomData.participants || {};
+          const pIds = Object.keys(parts);
+
+          // Если в комнате стало >= 2 участников — помечаем hadTwo = true
+          if (pIds.length >= 2) {
+            if (groupRoom.closeTimer) { clearTimeout(groupRoom.closeTimer); groupRoom.closeTimer = null; }
+            if (!roomData.hadTwo) update(ref(db, `groupCalls/${groupId}`), { hadTwo: true }).catch(()=>{});
+          } else if (roomData.hadTwo && pIds.length < 2) {
+            // Было >= 2, теперь остался 1 — автоматически закрываем комнату через 3 сек
+            if (!groupRoom.closeTimer) {
+              showToast('В комнате осталось меньше 2 человек — звонок завершится через 3 сек...', '#fb7185');
+              groupRoom.closeTimer = setTimeout(async () => {
+                await remove(ref(db, `groupCalls/${groupId}`)).catch(()=>{});
+                leaveGroupRoom();
+              }, 3000);
+            }
+          }
+
+          // Рендер карточек участников
+          const grid = document.getElementById('grpPeersGrid');
+          grid.innerHTML = pIds.map(uid => {
+            const u = allUsersCache[uid] || { uid, username: 'User' };
+            return `<div class="grp-peer-card">
+              <div class="avatar" style="width:58px;height:58px;font-size:22px;background:${u.avatarColor||AVATAR_GRADIENTS[0]}">${avatarInnerHtml(u, getDisplayName(u)[0])}</div>
+              <div style="font-weight:700;font-size:13.5px;">${esc(getDisplayName(u))} ${uid===currentUser.uid?'(Вы)':''}</div>
+              <div style="font-size:11px;color:#34d399;">@${esc(u.username)}</div>
+            </div>`;
+          }).join('');
+
+          // Подключаем новых участников (Mesh WebRTC)
+          for (const peerUid of pIds) {
+            if (peerUid === currentUser.uid) continue;
+            if (!groupRoom.pcs[peerUid]) connectGroupPeer(groupId, peerUid);
+          }
+          // Закрываем ушедших
+          for (const existingUid of Object.keys(groupRoom.pcs)) {
+            if (!parts[existingUid]) {
+              try { groupRoom.pcs[existingUid].close(); } catch {}
+              delete groupRoom.pcs[existingUid];
+              if (groupRoom.audios[existingUid]) { groupRoom.audios[existingUid].remove(); delete groupRoom.audios[existingUid]; }
+            }
+          }
+        });
+        groupRoom.unsubs.push(uRoom);
+      }
+
+      async function connectGroupPeer(groupId, peerUid) {
+        if (!groupRoom) return;
+        const pc = new RTCPeerConnection(ICE_CONFIG);
+        groupRoom.pcs[peerUid] = pc;
+        pc.addTrack(groupRoom.filteredTrack, new MediaStream([groupRoom.filteredTrack]));
+
+        pc.ontrack = (ev) => {
+          if (!groupRoom) return;
+          let a = groupRoom.audios[peerUid];
+          if (!a) {
+            a = document.createElement('audio'); a.autoplay = true; a.playsInline = true;
+            document.getElementById('grpAudioPool').appendChild(a);
+            groupRoom.audios[peerUid] = a;
+          }
+          a.srcObject = ev.streams[0];
+          a.play().catch(()=>{});
+        };
+
+        const pairKey = [currentUser.uid, peerUid].sort().join('_');
+        const isOfferer = currentUser.uid < peerUid;
+        const sigBase = `groupCalls/${groupId}/signals/${pairKey}`;
+        const myCandPath = isOfferer ? `${sigBase}/c1` : `${sigBase}/c2`;
+        const peerCandPath = isOfferer ? `${sigBase}/c2` : `${sigBase}/c1`;
+
+        pc.onicecandidate = (ev) => {
+          if (ev.candidate && groupRoom) push(ref(db, myCandPath), ev.candidate.toJSON()).catch(()=>{});
+        };
+
+        let remoteSet = false;
+        const iceQ = [];
+
+        if (isOfferer) {
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+          await set(ref(db, `${sigBase}/offer`), { type: offer.type, sdp: offer.sdp });
+          const uAns = onValue(ref(db, `${sigBase}/answer`), async (s) => {
+            const ans = s.val();
+            if (ans && !remoteSet && pc.signalingState === 'have-local-offer') {
+              remoteSet = true;
+              await pc.setRemoteDescription(new RTCSessionDescription(ans));
+              for (const c of iceQ) await pc.addIceCandidate(new RTCIceCandidate(c)).catch(()=>{});
+            }
+          });
+          groupRoom.unsubs.push(uAns);
+        } else {
+          const uOff = onValue(ref(db, `${sigBase}/offer`), async (s) => {
+            const off = s.val();
+            if (off && !remoteSet) {
+              remoteSet = true;
+              await pc.setRemoteDescription(new RTCSessionDescription(off));
+              const ans = await pc.createAnswer();
+              await pc.setLocalDescription(ans);
+              await set(ref(db, `${sigBase}/answer`), { type: ans.type, sdp: ans.sdp });
+              for (const c of iceQ) await pc.addIceCandidate(new RTCIceCandidate(c)).catch(()=>{});
+            }
+          });
+          groupRoom.unsubs.push(uOff);
+        }
+
+        const uIce = onChildAdded(ref(db, peerCandPath), async (s) => {
+          const c = s.val(); if (!c) return;
+          if (remoteSet) await pc.addIceCandidate(new RTCIceCandidate(c)).catch(()=>{});
+          else iceQ.push(c);
+        });
+        groupRoom.unsubs.push(uIce);
+      }
+
+      async function leaveGroupRoom() {
+        if (!groupRoom) return;
+        const r = groupRoom; groupRoom = null;
+        clearTimeout(r.closeTimer); clearInterval(r.timerIv);
+        r.unsubs.forEach(u => u && u());
+        if (r.dspCleanup) r.dspCleanup();
+        r.localStream.getTracks().forEach(t => t.stop());
+        Object.values(r.pcs).forEach(pc => { try { pc.close(); } catch {} });
+        Object.values(r.audios).forEach(a => a.remove());
+        groupOverlay.style.display = 'none';
+        setMinimized(false);
+
+        await remove(ref(db, `groupCalls/${r.groupId}/participants/${currentUser.uid}`)).catch(()=>{});
+        if (currentUser) update(ref(db, `users/${currentUser.uid}`), { inCall: false }).catch(()=>{});
+
+        // Если в комнате никого не осталось — подчищаем узел
+        const leftSnap = await get(ref(db, `groupCalls/${r.groupId}/participants`));
+        if (!leftSnap.exists() || !Object.keys(leftSnap.val() || {}).length) {
+          await remove(ref(db, `groupCalls/${r.groupId}`)).catch(()=>{});
+        }
+      }
+
+      // Кнопка звонка в шапке группы + баннер активной комнаты
+      const hCallBtn = document.getElementById('headerCallBtn');
+      const origHeaderCallClick = hCallBtn.onclick;
+      hCallBtn.onclick = () => {
+        if (activeTarget?.type === 'group') joinOrCreateGroupRoom(activeTarget.id);
+        else if (origHeaderCallClick) origHeaderCallClick();
+      };
+
+      function watchGroupBanner(groupId) {
+        if (watchedBannerGroupId === groupId) return;
+        watchedBannerGroupId = groupId;
+        if (bannerUnsub) { bannerUnsub(); bannerUnsub = null; }
+        groupBanner.style.display = 'none';
+        if (!groupId) return;
+        bannerUnsub = onValue(ref(db, `groupCalls/${groupId}/participants`), (snap) => {
+          const cnt = Object.keys(snap.val() || {}).length;
+          if (cnt > 0 && activeTarget?.type === 'group' && activeTarget.id === groupId) {
+            const inThis = groupRoom?.groupId === groupId;
+            groupBanner.innerHTML = `
+              <div><b>🟢 Голосовая комната</b> <span style="opacity:0.85;">• ${cnt} уч.</span></div>
+              <button class="glass-btn btn-success" style="padding:6px 12px;font-size:12px;" id="joinGrpBannerBtn">
+                ${inThis ? 'Открыть' : 'Присоединиться'}
+              </button>`;
+            groupBanner.querySelector('#joinGrpBannerBtn').onclick = () => joinOrCreateGroupRoom(groupId);
+            groupBanner.style.display = 'flex';
+          } else {
+            groupBanner.style.display = 'none';
+          }
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // D. СИНХРОНИЗАЦИЯ СОСТОЯНИЯ (1-НА-1 + ГРУППЫ + ПЛАШКА)
+      // -----------------------------------------------------------------------
+      function syncAllCallUI() {
+        // Показываем кнопку трубки в группах и следим за баннером
+        if (activeTarget?.type === 'group') {
+          hCallBtn.style.display = 'inline-flex';
+          watchGroupBanner(activeTarget.id);
+        } else {
+          watchGroupBanner(null);
+        }
+
+        // 1-на-1 звонок
+        if (activeCall) {
+          gearBtn.style.display = activeCall.pc ? 'flex' : 'none';
+          if (activeCall.pc && hookedCallId !== activeCall.callId) hook1to1Connection(activeCall);
+          ensure1to1VideoButtons();
+          document.getElementById('miniCallLabel').textContent =
+            `${document.getElementById('callPeerName').textContent} • ${document.getElementById('callStatusText').textContent}`;
+          const mBtn = document.getElementById('miniCallMicBtn');
+          mBtn.classList.toggle('off', !!activeCall.micMuted);
+          mBtn.textContent = activeCall.micMuted ? '🔇' : '🎤';
+          return;
+        }
+
+        // Очистка после завершения 1-на-1 звонка
+        if (hookedCallId) {
+          hookedCallId = null;
+          renegUnsubs.forEach(u => u && u()); renegUnsubs = [];
+          stopLocalVideo(false);
+          remoteStage.style.display = 'none';
+          overlay.classList.remove('video-active');
           if (dspCleanup) { dspCleanup(); dspCleanup = null; }
           if (currentLiveFx !== 'normal') {
             currentLiveFx = 'normal';
             gearBtn.classList.remove('active-fx');
             filterMenu.querySelectorAll('.cf-item').forEach(b => b.classList.toggle('active', b.dataset.cf === 'normal'));
           }
+        }
+
+        // Групповая комната
+        if (groupRoom) {
+          document.getElementById('miniCallLabel').textContent =
+            `👥 ${groupRoom.name} • ${document.getElementById('grpCallSub').textContent}`;
+          const mBtn = document.getElementById('miniCallMicBtn');
+          mBtn.classList.toggle('off', !!groupRoom.micMuted);
+          mBtn.textContent = groupRoom.micMuted ? '🔇' : '🎤';
           return;
         }
-        gearBtn.style.display = activeCall.pc ? 'flex' : 'none';
-        const nm = document.getElementById('callPeerName').textContent;
-        const stTxt = document.getElementById('callStatusText').textContent;
-        document.getElementById('miniCallLabel').textContent = `${nm} • ${stTxt}`;
-        const mBtn = document.getElementById('miniCallMicBtn');
-        mBtn.classList.toggle('off', !!activeCall.micMuted);
-        mBtn.textContent = activeCall.micMuted ? '🔇' : '🎤';
+
+        if (isMinimized) setMinimized(false);
       }
-      setInterval(syncMiniUI, 350);
+
+      setInterval(syncAllCallUI, 350);
     })();
   </script>
 </body>
