@@ -77,6 +77,146 @@
       --tg-blue: #fb923c; --accent: #fdba74;
       --msg-out: linear-gradient(135deg, rgba(249,115,22,0.82), rgba(225,29,72,0.86));
     }
+    body[data-theme="tg_space"] {
+      --bg-deep: #0b1628; --bg-chat: rgba(9, 18, 34, 0.56); --bg-sidebar: rgba(13, 22, 38, 0.86);
+      --blob1: #2563eb; --blob2: #7c3aed; --blob3: #06b6d4;
+      --msg-out: linear-gradient(135deg, #7c3aed, #3b82f6);
+      --msg-in: rgba(24, 37, 58, 0.92);
+    }
+    body[data-theme="tg_space"] .theme-pattern {
+      display: block;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      opacity: 0.72;
+      animation: patternDrift 48s linear infinite;
+    }
+    body[data-theme="tg_sky"] {
+      --bg-deep: #6cb8f6; --bg-sidebar: rgba(255, 255, 255, 0.9); --bg-chat: rgba(114, 187, 247, 0.34);
+      --glass-card: rgba(15, 23, 42, 0.06); --glass-border: rgba(15, 23, 42, 0.12); --glass-highlight: rgba(255, 255, 255, 0.85);
+      --text: #0f172a; --muted: #334155;
+      --msg-out: linear-gradient(135deg, #2aabee, #3b82f6);
+      --msg-in: rgba(255, 255, 255, 0.95);
+      --input-bg: rgba(255, 255, 255, 0.96); --header-bg: rgba(255, 255, 255, 0.94); --nav-bg: rgba(255, 255, 255, 0.96);
+      --blob1: #93c5fd; --blob2: #60a5fa; --blob3: #bae6fd;
+    }
+    body[data-theme="tg_sky"] .aurora-bg { background: linear-gradient(155deg, #8fd3ff 0%, #68b5f5 55%, #79c4ff 100%); }
+    body[data-theme="tg_sky"] .theme-pattern {
+      display: block;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.22'%3E%3Ccircle cx='42' cy='42' r='13'/%3E%3Cellipse cx='42' cy='42' rx='24' ry='7' transform='rotate(-22 42 42)'/%3E%3Cpath d='M148 34c8-6 20-8 26-2-2 10-8 20-18 26l-10-10c2-6 4-10 2-14z'/%3E%3Cpath d='M140 50l-7 7m15 1l-7 7'/%3E%3Ccircle cx='160' cy='42' r='3'/%3E%3Cpath d='M98 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Cpath d='M36 135a15 15 0 1 0 18 18 12 12 0 1 1-18-18z'/%3E%3Ccircle cx='118' cy='108' r='16'/%3E%3Cpath d='M105 103c7 4 19 4 26 0M107 115c6-3 16-3 22 0'/%3E%3Cpath d='M178 134l12-12 10 10-12 12zM172 146l8-8m16-16l8-8'/%3E%3Cpath d='M75 182l14-14 14 8-8 14zM89 168l8-16'/%3E%3Ccircle cx='178' cy='186' r='3'/%3E%3Ccircle cx='28' cy='96' r='2.5'/%3E%3Ccircle cx='195' cy='82' r='2.5'/%3E%3Cpath d='M140 176l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/%3E%3Cpath d='M22 192l12-8 10 10'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      filter: invert(1) sepia(1) saturate(4) hue-rotate(185deg);
+      opacity: 0.42;
+    }
+    body[data-theme="tg_sky"] .msg-row.out .msg-bubble { color: #fff; }
+    body[data-theme="tg_sky"] .msg-row.out .msg-footer { color: rgba(255,255,255,0.88); }
+
+    body[data-theme="emerald_doodle"] {
+      --bg-deep: #06211c; --bg-sidebar: rgba(7, 30, 26, 0.88); --bg-chat: rgba(6, 26, 22, 0.62);
+      --tg-blue: #10b981; --accent: #34d399;
+      --blob1: #059669; --blob2: #0d9488; --blob3: #34d399;
+      --msg-out: linear-gradient(135deg, #059669, #0d9488);
+      --msg-in: rgba(16, 46, 40, 0.92);
+    }
+    body[data-theme="emerald_doodle"] .theme-pattern {
+      display: block;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' opacity='0.2'%3E%3Cpath d='M40 24v32M24 40h32M29 29l22 22M51 29L29 51'/%3E%3Cpolygon points='145,24 162,56 128,56'/%3E%3Cpath d='M145 56v10'/%3E%3Crect x='26' y='124' width='26' height='18' rx='5'/%3E%3Cpath d='M32 142l-4 7 10-7'/%3E%3Cpath d='M100 96c8-12 24-6 20 8-4 10-20 20-20 20s-16-10-20-20c-4-14 12-20 20-8z'/%3E%3Cpath d='M154 134l4 10 10 4-10 4-4 10-4-10-10-4 10-4z'/%3E%3Ccircle cx='96' cy='38' r='5'/%3E%3Ccircle cx='88' cy='168' r='4'/%3E%3Ccircle cx='178' cy='96' r='3'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.68;
+      animation: patternDrift 56s linear infinite;
+    }
+
+    body[data-theme="matrix_rain"] {
+      --bg-deep: #020a05; --bg-sidebar: rgba(4, 16, 8, 0.86); --bg-chat: rgba(2, 12, 6, 0.68);
+      --tg-blue: #22c55e; --accent: #4ade80;
+      --blob1: #16a34a; --blob2: #15803d; --blob3: #22c55e;
+      --msg-out: linear-gradient(135deg, rgba(22,163,74,0.86), rgba(5,150,105,0.88));
+      --msg-in: rgba(8, 28, 16, 0.92);
+    }
+    body[data-theme="starfield"] {
+      --bg-deep: #030510; --bg-sidebar: rgba(8, 12, 28, 0.84); --bg-chat: rgba(4, 7, 18, 0.58);
+      --tg-blue: #60a5fa; --accent: #93c5fd;
+      --blob1: #312e81; --blob2: #1e3a8a; --blob3: #4f46e5;
+      --msg-out: linear-gradient(135deg, rgba(79,70,229,0.86), rgba(37,99,235,0.86));
+      --msg-in: rgba(18, 25, 48, 0.9);
+    }
+    body[data-theme="sakura"] {
+      --bg-deep: #1e0e1b; --bg-sidebar: rgba(34, 16, 32, 0.86); --bg-chat: rgba(28, 12, 26, 0.62);
+      --tg-blue: #f472b6; --accent: #f9a8d4;
+      --blob1: #ec4899; --blob2: #a855f7; --blob3: #fb7185;
+      --msg-out: linear-gradient(135deg, rgba(236,72,153,0.84), rgba(168,85,247,0.84));
+      --msg-in: rgba(54, 24, 48, 0.9);
+    }
+    body[data-theme="cyber_grid"] {
+      --bg-deep: #0b0319; --bg-sidebar: rgba(16, 6, 32, 0.86); --bg-chat: rgba(10, 4, 24, 0.6);
+      --tg-blue: #06b6d4; --accent: #f472b6;
+      --blob1: #d946ef; --blob2: #06b6d4; --blob3: #7c3aed;
+      --msg-out: linear-gradient(135deg, rgba(217,70,239,0.82), rgba(6,182,212,0.85));
+      --msg-in: rgba(28, 14, 52, 0.92);
+    }
+    body[data-theme="cyber_grid"] .theme-pattern {
+      display: block;
+      background-image:
+        linear-gradient(rgba(6, 182, 212, 0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 70, 239, 0.16) 1px, transparent 1px);
+      background-size: 42px 42px;
+      animation: gridScroll 16s linear infinite;
+    }
+    body[data-theme="lava_ember"] {
+      --bg-deep: #140505; --bg-sidebar: rgba(28, 9, 9, 0.86); --bg-chat: rgba(20, 6, 6, 0.65);
+      --tg-blue: #f97316; --accent: #fb923c;
+      --blob1: #dc2626; --blob2: #ea580c; --blob3: #f59e0b;
+      --msg-out: linear-gradient(135deg, rgba(234,88,12,0.88), rgba(220,38,38,0.88));
+      --msg-in: rgba(45, 16, 14, 0.92);
+    }
+    body[data-theme="neon_net"] {
+      --bg-deep: #060b18; --bg-sidebar: rgba(10, 18, 36, 0.85); --bg-chat: rgba(6, 12, 26, 0.62);
+      --tg-blue: #38bdf8; --accent: #7dd3fc;
+      --blob1: #0284c7; --blob2: #4f46e5; --blob3: #06b6d4;
+      --msg-out: linear-gradient(135deg, rgba(14,165,233,0.84), rgba(99,102,241,0.86));
+      --msg-in: rgba(17, 29, 54, 0.92);
+    }
+
+    .theme-pattern {
+      position: absolute; inset: 0; display: none; pointer-events: none; z-index: 1;
+    }
+    @keyframes patternDrift { 0%{background-position:0 0} 100%{background-position:220px 220px} }
+    @keyframes gridScroll { 0%{background-position:0 0} 100%{background-position:0 42px} }
+
+    /* Ответы, редактирование, подсветка прыжка, Drag & Drop */
+    .reply-quote {
+      font-size: 12px; padding: 5px 9px; margin-bottom: 6px; border-radius: 10px;
+      background: rgba(0, 0, 0, 0.22); border-left: 3px solid var(--tg-blue);
+      cursor: pointer; transition: background 0.15s; max-width: 100%;
+    }
+    .reply-quote:hover { background: rgba(0, 0, 0, 0.34); }
+    .reply-quote-author { font-weight: 700; color: #7dd3fc; font-size: 11px; margin-bottom: 1px; }
+    body[data-theme="light"] .msg-row.in .reply-quote-author,
+    body[data-theme="tg_sky"] .msg-row.in .reply-quote-author { color: #0284c7; }
+    .reply-quote-text { opacity: 0.88; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
+
+    .msg-line.jump-highlight {
+      animation: jumpFlash 1.7s ease;
+    }
+    @keyframes jumpFlash {
+      0%, 100% { background: transparent; }
+      20%, 60% { background: rgba(42, 171, 238, 0.34); box-shadow: 0 0 0 2px rgba(42,171,238,0.55); }
+    }
+
+    #replyEditBanner {
+      display: none; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 7px 12px; margin-bottom: 7px; border-radius: 14px;
+      background: rgba(42, 171, 238, 0.16); border-left: 3px solid var(--tg-blue);
+      font-size: 12.5px;
+    }
+
+    #dropOverlay {
+      position: absolute; inset: 10px; z-index: 90; display: none;
+      flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      border-radius: 22px; border: 2.5px dashed var(--tg-blue);
+      background: rgba(10, 18, 34, 0.84); backdrop-filter: blur(12px);
+      color: #fff; text-align: center; pointer-events: none;
+      animation: popIn 0.15s ease;
+    }
 
     * {
       box-sizing: border-box;
@@ -491,10 +631,18 @@
 
     #msgContextMenu, #chatContextMenu, #headerDotsMenu {
       position: fixed; z-index: 750; display: none; flex-direction: column; gap: 4px;
-      padding: 8px; border-radius: 18px; min-width: 215px; animation: popIn 0.14s ease;
+      padding: 8px; border-radius: 18px; min-width: 248px; animation: popIn 0.14s ease;
     }
-    .ctx-reacts { display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--glass-border); }
-    .react-choice { width: 29px; height: 29px; border: none; background: transparent; font-size: 17px; cursor: pointer; }
+    .ctx-reacts {
+      display: grid; grid-template-columns: repeat(8, 1fr); gap: 2px;
+      padding-bottom: 7px; border-bottom: 1px solid var(--glass-border);
+    }
+    .react-choice {
+      width: 29px; height: 29px; border: none; background: transparent; font-size: 17px;
+      cursor: pointer; border-radius: 8px; transition: transform 0.12s, background 0.12s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .react-choice:hover { transform: scale(1.28); background: rgba(255,255,255,0.12); }
     .ctx-action {
       width: 100%; border: none; background: transparent; color: var(--text);
       padding: 8px 10px; border-radius: 10px; text-align: left; font-size: 13px;
@@ -839,6 +987,7 @@
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
+    <div class="theme-pattern" id="themePattern"></div>
   </div>
   <canvas id="snowCanvas"></canvas>
   <canvas id="fxCanvas"></canvas>
@@ -961,7 +1110,12 @@
       </nav>
     </aside>
 
-    <main class="chat-pane glass">
+    <main class="chat-pane glass" id="chatPane">
+      <div id="dropOverlay">
+        <div style="font-size:48px;">📎</div>
+        <div style="font-size:18px;font-weight:800;">Отпусти файл, чтобы прикрепить</div>
+        <div style="font-size:13px;opacity:0.8;">Фото / GIF (с выбором рамки), видео или любой файл</div>
+      </div>
       <div class="empty-state" id="emptyChatState">
         <div style="font-size:56px; margin-bottom:12px;">❄️</div>
         <h2 style="margin-bottom:8px;">ZIMA Messenger</h2>
@@ -1035,6 +1189,14 @@
             <button class="glass-btn btn-primary" id="inputLockActionBtn" style="padding:6px 12px; font-size:12px;"></button>
           </div>
 
+          <div id="replyEditBanner">
+            <div style="min-width:0; flex:1;">
+              <div id="reBannerTitle" style="font-weight:700; color:var(--accent); font-size:11.5px;"></div>
+              <div id="reBannerText" style="color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+            </div>
+            <button class="glass-btn icon-btn" id="reCancelBtn" style="width:28px;height:28px;font-size:13px;">✕</button>
+          </div>
+
           <div class="compact-composer" id="chatInputRow">
             <div class="composer-pill">
               <button class="pill-icon-btn" id="toggleStickerBtn" title="Стикеры">😀</button>
@@ -1052,6 +1214,8 @@
   <!-- КОНТЕКСТНЫЕ МЕНЮ -->
   <div id="msgContextMenu" class="glass">
     <div class="ctx-reacts" id="ctxReactsRow"></div>
+    <button class="ctx-action" id="ctxReplyBtn">↩️ Ответить</button>
+    <button class="ctx-action" id="ctxEditBtn">✏️ Изменить</button>
     <button class="ctx-action" id="ctxSelectBtn">☑️ Выбрать несколько</button>
     <button class="ctx-action" id="ctxForwardBtn">↪️ Переслать</button>
     <button class="ctx-action danger" id="ctxDeleteMeBtn">🗑 Удалить только у меня</button>
@@ -1130,6 +1294,21 @@
         </div>
         <input class="glass-input" id="mediaCaptionInput" placeholder="Подпись (необязательно)..." />
         <button class="glass-btn btn-primary" id="confirmSendMediaBtn" style="width:100%;">➤ Отправить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПОДТВЕРЖДЕНИЕ ОТПРАВКИ ФАЙЛА / ВИДЕО (С ПОДПИСЬЮ) -->
+  <div class="modal-backdrop" id="fileSendModal">
+    <div class="modal-box glass" style="max-width:440px;">
+      <div class="modal-head">
+        <h3 id="fsModalTitle">📎 Отправка файла</h3>
+        <button class="glass-btn icon-btn" id="fsCancelBtn">✕</button>
+      </div>
+      <div class="modal-body" style="align-items:center;">
+        <div id="fsPreviewBox" style="width:100%; text-align:center;"></div>
+        <input class="glass-input" id="fsCaptionInput" placeholder="Подпись (необязательно)..." />
+        <button class="glass-btn btn-primary" id="fsConfirmBtn" style="width:100%;">➤ Отправить</button>
       </div>
     </div>
   </div>
@@ -1396,7 +1575,10 @@
       { id:"crown", emoji:"👑", label:"БОСС", anim:"anim-float" },
       { id:"boom_gg", emoji:"💥", label:"ГГ ВП", anim:"anim-pulse" }
     ];
-    const REACTIONS = { fire:"🔥", laugh:"😂", skull:"💀", ice:"❄️", heart:"❤️", zap:"⚡", clown:"🤡" };
+    const REACTIONS = {
+      fire:"🔥", laugh:"😂", skull:"💀", ice:"❄️", heart:"❤️", zap:"⚡", clown:"🤡", thumbsup:"👍",
+      thumbsdown:"👎", cry:"😭", mindblown:"🤯", star:"🤩", moai:"🗿", handshake:"🤝", eyes:"👀", party:"🎉"
+    };
     const VOICE_FX_LABELS = { normal:"🎙️ Обычный", chipmunk:"🐿️ Бурундук", demon:"👹 Демон", robot:"🤖 Робот", echo:"🌌 Космос", radio:"📻 Рация" };
     const LIVE_CALL_FILTERS = [
       ['normal',   '🎙️ Обычный голос'],
@@ -1586,28 +1768,116 @@
       }
     }
 
+    // Иконка ZIMA для системных уведомлений и PWA-ярлыка
+    let zimaIconUrl = '';
+    let deferredPwaPrompt = null;
+    (function setupZimaPwaAndIcon() {
+      const c = document.createElement('canvas'); c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0, 0, 512, 512);
+      g.addColorStop(0, '#2aabee'); g.addColorStop(1, '#6366f1');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, 512, 512);
+      ctx.font = '260px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('❄️', 256, 272);
+      zimaIconUrl = c.toDataURL('image/png');
+
+      try {
+        const manifest = {
+          name: 'ZIMA Messenger', short_name: 'ZIMA',
+          start_url: location.href, display: 'standalone',
+          background_color: '#0e1621', theme_color: '#0e1621',
+          icons: [{ src: zimaIconUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
+        };
+        const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+        const link = document.createElement('link'); link.rel = 'manifest'; link.href = URL.createObjectURL(blob);
+        document.head.appendChild(link);
+        const apple = document.createElement('link'); apple.rel = 'apple-touch-icon'; apple.href = zimaIconUrl;
+        document.head.appendChild(apple);
+      } catch {}
+      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPwaPrompt = e; });
+    })();
+
+    async function triggerPwaInstall() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        const choice = await deferredPwaPrompt.userChoice;
+        if (choice.outcome === 'accepted') showToast('✅ Ярлык ZIMA добавлен!', '#34d399');
+        deferredPwaPrompt = null;
+      } else {
+        const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        alert(isIos
+          ? 'На iPhone нажми «Поделиться» (квадрат со стрелкой внизу) → «На экран „Домой“».'
+          : 'Нажми на три точки (⋮) в браузере → «Добавить на главный экран» или «Установить приложение».');
+      }
+    }
+
+    // Мигание заголовка вкладки при свёрнутом окне
+    const BASE_DOC_TITLE = 'ZIMA — Мессенджер №1 в России';
+    let titleFlashIv = null;
+    function flashDocTitle(alertText) {
+      if (!document.hidden) return;
+      clearInterval(titleFlashIv);
+      let flip = false;
+      document.title = alertText;
+      titleFlashIv = setInterval(() => {
+        if (!document.hidden) { clearInterval(titleFlashIv); document.title = BASE_DOC_TITLE; return; }
+        flip = !flip;
+        document.title = flip ? BASE_DOC_TITLE : alertText;
+      }, 1300);
+    }
+    window.addEventListener('focus', () => { clearInterval(titleFlashIv); document.title = BASE_DOC_TITLE; });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { clearInterval(titleFlashIv); document.title = BASE_DOC_TITLE; } });
+
     async function requestNotifPermission() {
       if (!('Notification' in window)) return showToast('Уведомления не поддерживаются этим браузером', '#fb7185');
       const res = await Notification.requestPermission();
       showToast(res === 'granted' ? '🔔 Уведомления включены!' : '🔕 Уведомления отклонены', res === 'granted' ? '#34d399' : '#fb7185');
+      if (res === 'granted') {
+        sendSystemNotification('❄️ ZIMA Уведомления активны', 'Теперь вы не пропустите сообщения и звонки!', null, { force: true });
+      }
       if (activeBottomNav === 'profile') renderSidebar();
     }
 
-    function sendSystemNotification(title, body, onClickCb) {
+    async function sendSystemNotification(title, body, onClickCb, opts = {}) {
+      const shortBody = String(body || '').length > 90 ? String(body).slice(0, 90) + '…' : String(body || '');
+      if (document.hidden) flashDocTitle(title);
       if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+      const notifOpts = {
+        body: shortBody,
+        icon: zimaIconUrl || undefined,
+        badge: zimaIconUrl || undefined,
+        tag: opts.tag || ('zima_' + Date.now()),
+        renotify: true,
+        requireInteraction: !!opts.urgent,
+        vibrate: opts.urgent ? [400, 150, 400, 150, 400] : [160, 80, 160],
+        silent: false
+      };
+
+      // 1. Сначала пробуем через ServiceWorkerRegistration (обязательно для Android Chrome в фоне)
       try {
-        const shortBody = body.length > 75 ? body.slice(0, 75) + '…' : body;
-        const n = new Notification(title, { body: shortBody, tag: 'zima_' + Date.now(), renotify: true });
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg && reg.showNotification) {
+            await reg.showNotification(title, notifOpts);
+            return;
+          }
+        }
+      } catch {}
+
+      // 2. Классический Web Notification API (ПК + большинство мобильных браузеров)
+      try {
+        const n = new Notification(title, notifOpts);
         n.onclick = () => { window.focus(); n.close(); if (onClickCb) onClickCb(); };
       } catch {}
     }
 
     // =========================================================================
-    // 5. WEB AUDIO ENGINE: ЗВУКИ, РИНГТОНЫ, ГУДКИ, ХОРРОР-СКРИМЕР, LIVE DSP
+    // 5. WEB AUDIO ENGINE: УЛУЧШЕННЫЕ ЗВУКИ, КАЧЕСТВЕННЫЕ РИНГТОНЫ, LIVE DSP
     // =========================================================================
     let audioCtx = null;
     let soundEnabled = localStorage.getItem('zima_sound') !== '0';
-    let selectedRingtone = localStorage.getItem('zima_ringtone') || 'classic';
+    let selectedRingtone = localStorage.getItem('zima_ringtone') || 'zima_bells';
     let customRingtoneData = '';
     let activeRingStop = null;
 
@@ -1616,6 +1886,7 @@
       if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
     }
     window.addEventListener('pointerdown', unlockAudio, { passive: true });
+    window.addEventListener('keydown', unlockAudio, { passive: true });
 
     function makeDistortionCurve(amount = 80) {
       const n = 44100, c = new Float32Array(n), deg = Math.PI / 180;
@@ -1623,14 +1894,25 @@
       return c;
     }
 
-    function playTone(freq, type = 'sine', dur = 0.08, vol = 0.06, slideTo = null) {
-      if (!soundEnabled) return;
-      unlockAudio(); if (!audioCtx) return;
-      const now = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
-      o.type = type; o.frequency.setValueAtTime(freq, now);
-      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, now + dur);
-      g.gain.setValueAtTime(vol, now); g.gain.exponentialRampToValueAtTime(0.001, now + dur);
-      o.connect(g).connect(audioCtx.destination); o.start(now); o.stop(now + dur);
+    // Мягкий полифонический синтез ноты с плавной атакой (без щелчков!)
+    function synthNote(ctx, dest, freq, startOffset, dur, vol, type = 'sine', harmonics = 0) {
+      const t0 = ctx.currentTime + startOffset;
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, t0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.linearRampToValueAtTime(vol, t0 + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0008, t0 + dur);
+      o.connect(g).connect(dest);
+      o.start(t0); o.stop(t0 + dur + 0.02);
+      if (harmonics > 0) {
+        const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+        o2.type = 'sine'; o2.frequency.setValueAtTime(freq * 2, t0);
+        g2.gain.setValueAtTime(0.0001, t0);
+        g2.gain.linearRampToValueAtTime(vol * harmonics, t0 + 0.012);
+        g2.gain.exponentialRampToValueAtTime(0.0006, t0 + dur * 0.65);
+        o2.connect(g2).connect(dest);
+        o2.start(t0); o2.stop(t0 + dur * 0.7);
+      }
     }
 
     function stopRingtone() { if (activeRingStop) { activeRingStop(); activeRingStop = null; } }
@@ -1641,8 +1923,11 @@
         if (!audioCtx) return;
         const now = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.type = 'sine'; o.frequency.setValueAtTime(425, now);
-        g.gain.setValueAtTime(0.11, now); g.gain.setValueAtTime(0.11, now + 0.9); g.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
-        o.connect(g).connect(audioCtx.destination); o.start(now); o.stop(now + 1.05);
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(0.09, now + 0.03);
+        g.gain.setValueAtTime(0.09, now + 0.88);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.98);
+        o.connect(g).connect(audioCtx.destination); o.start(now); o.stop(now + 1.02);
       };
       beep();
       const iv = setInterval(beep, 2400);
@@ -1653,11 +1938,13 @@
       stopRingtone(); unlockAudio();
       if (!audioCtx) return;
       for (let i = 0; i < 4; i++) {
-        const st = audioCtx.currentTime + i * 0.55;
+        const st = audioCtx.currentTime + i * 0.52;
         const o = audioCtx.createOscillator(), g = audioCtx.createGain();
         o.type = 'sine'; o.frequency.setValueAtTime(480, st);
-        g.gain.setValueAtTime(0.14, st); g.gain.exponentialRampToValueAtTime(0.001, st + 0.28);
-        o.connect(g).connect(audioCtx.destination); o.start(st); o.stop(st + 0.3);
+        g.gain.setValueAtTime(0.001, st);
+        g.gain.linearRampToValueAtTime(0.11, st + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, st + 0.26);
+        o.connect(g).connect(audioCtx.destination); o.start(st); o.stop(st + 0.28);
       }
     }
 
@@ -1669,43 +1956,87 @@
         a.loop = !previewName; a.volume = 0.85;
         a.play().catch(() => {});
         activeRingStop = () => { a.pause(); a.currentTime = 0; };
-        if (previewName) setTimeout(stopRingtone, 4000);
+        if (previewName) setTimeout(stopRingtone, 4200);
         return;
       }
       unlockAudio();
-      const melodies = {
-        classic: [[523,0],[659,0.16],[784,0.32],[1046,0.48]],
-        crystal: [[880,0],[1174,0.14],[1318,0.28],[1760,0.42]],
-        cyber: [[330,0],[440,0.12],[660,0.24],[880,0.36],[440,0.48]],
-        soft: [[392,0],[494,0.22],[587,0.44]],
-        pulse: [[622,0],[622,0.18],[932,0.38]]
-      };
-      const notes = melodies[mode] || melodies.classic;
       const playBar = () => {
         if (!audioCtx) return;
-        const base = audioCtx.currentTime;
-        notes.forEach(([f, off]) => {
-          const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-          o.type = mode === 'cyber' ? 'sawtooth' : 'triangle';
-          o.frequency.setValueAtTime(f, base + off);
-          g.gain.setValueAtTime(0.16, base + off);
-          g.gain.exponentialRampToValueAtTime(0.001, base + off + 0.34);
-          o.connect(g).connect(audioCtx.destination);
-          o.start(base + off); o.stop(base + off + 0.36);
-        });
-        if (!previewName && navigator.vibrate) navigator.vibrate([300, 150, 300]);
+        // Лёгкий тёплый дилэй-хвост для студийного звучания рингтонов
+        const master = audioCtx.createGain(); master.gain.value = 0.85;
+        const delay = audioCtx.createDelay(); delay.delayTime.value = 0.22;
+        const fb = audioCtx.createGain(); fb.gain.value = 0.24;
+        const lp = audioCtx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3400;
+        master.connect(audioCtx.destination);
+        master.connect(delay); delay.connect(lp); lp.connect(fb); fb.connect(delay); lp.connect(audioCtx.destination);
+
+        if (mode === 'aurora_dream') {
+          // Мягкие электропиано аккорды Fmaj7 -> G6
+          [349.2, 440, 523.3, 659.3].forEach((f, i) => synthNote(audioCtx, master, f, i * 0.05, 0.95, 0.09, 'sine', 0.25));
+          [392.0, 493.9, 587.3, 659.3].forEach((f, i) => synthNote(audioCtx, master, f, 0.65 + i * 0.05, 1.0, 0.09, 'sine', 0.25));
+        } else if (mode === 'nordic_marimba') {
+          // Современная флагманская маримба
+          [[587.3,0],[880,0.14],[740,0.28],[1174.7,0.44],[880,0.62],[1174.7,0.78]]
+            .forEach(([f, off]) => synthNote(audioCtx, master, f, off, 0.34, 0.16, 'triangle', 0.35));
+        } else if (mode === 'tg_classic') {
+          // Чистый тёплый двойной перезвон
+          [[523.3,0],[659.3,0.14],[784.0,0.28],[1046.5,0.44]]
+            .forEach(([f, off]) => synthNote(audioCtx, master, f, off, 0.55, 0.15, 'sine', 0.4));
+        } else if (mode === 'neon_waves') {
+          // Тёплый мягкий синтвейв (без резкого писка)
+          const sub = audioCtx.createBiquadFilter(); sub.type = 'lowpass'; sub.frequency.value = 1800; sub.connect(master);
+          [[261.6,0],[329.6,0.14],[392.0,0.28],[523.3,0.42],[659.3,0.56],[523.3,0.72]]
+            .forEach(([f, off]) => synthNote(audioCtx, sub, f, off, 0.36, 0.14, 'triangle', 0.2));
+        } else if (mode === 'zen_kalimba') {
+          // Нежная калимба
+          [[440,0],[554.4,0.18],[659.3,0.36],[880,0.54],[659.3,0.76]]
+            .forEach(([f, off]) => synthNote(audioCtx, master, f, off, 0.6, 0.14, 'sine', 0.5));
+        } else {
+          // zima_bells (по умолчанию): кристальный зимний перезвон + мягкий пэд
+          synthNote(audioCtx, master, 261.6, 0, 1.3, 0.06, 'sine', 0);
+          synthNote(audioCtx, master, 392.0, 0, 1.3, 0.05, 'sine', 0);
+          [[1046.5,0],[1318.5,0.14],[1568.0,0.28],[2093.0,0.44],[1568.0,0.62]]
+            .forEach(([f, off]) => synthNote(audioCtx, master, f, off, 0.52, 0.12, 'sine', 0.35));
+        }
+        if (!previewName && navigator.vibrate) navigator.vibrate([320, 140, 320]);
       };
       playBar();
-      if (previewName) return;
-      const iv = setInterval(playBar, 1750);
+      if (previewName) {
+        const t = setTimeout(stopRingtone, 2400);
+        activeRingStop = () => clearTimeout(t);
+        return;
+      }
+      const iv = setInterval(playBar, 2100);
       activeRingStop = () => clearInterval(iv);
     }
 
     const SFX = {
-      click: () => playTone(540, 'sine', 0.04, 0.03, 780),
-      send: () => playTone(460, 'triangle', 0.08, 0.06, 900),
-      incoming: () => { playTone(660, 'sine', 0.09, 0.06, 880); setTimeout(() => playTone(990, 'sine', 0.12, 0.05), 65); },
-      react: () => playTone(760, 'sine', 0.07, 0.05, 1280),
+      click: () => {
+        if (!soundEnabled) return; unlockAudio(); if (!audioCtx) return;
+        const t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(620, t); o.frequency.exponentialRampToValueAtTime(840, t + 0.028);
+        g.gain.setValueAtTime(0.001, t); g.gain.linearRampToValueAtTime(0.025, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0005, t + 0.032);
+        o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + 0.035);
+      },
+      send: () => {
+        if (!soundEnabled) return; unlockAudio(); if (!audioCtx) return;
+        const t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(420, t); o.frequency.exponentialRampToValueAtTime(880, t + 0.085);
+        g.gain.setValueAtTime(0.001, t); g.gain.linearRampToValueAtTime(0.095, t + 0.014); g.gain.exponentialRampToValueAtTime(0.0008, t + 0.11);
+        o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + 0.12);
+      },
+      incoming: () => {
+        if (!soundEnabled) return; unlockAudio(); if (!audioCtx) return;
+        synthNote(audioCtx, audioCtx.destination, 784.0, 0, 0.22, 0.16, 'sine', 0.3);
+        synthNote(audioCtx, audioCtx.destination, 1046.5, 0.095, 0.34, 0.17, 'sine', 0.35);
+      },
+      react: () => {
+        if (!soundEnabled) return; unlockAudio(); if (!audioCtx) return;
+        const t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(1260, t + 0.08);
+        g.gain.setValueAtTime(0.001, t); g.gain.linearRampToValueAtTime(0.11, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0008, t + 0.1);
+        o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + 0.11);
+      },
       screamer: () => {
         unlockAudio(); if (!audioCtx) return;
         const now = audioCtx.currentTime, dur = 3.6;
@@ -1885,7 +2216,18 @@
     function resizeC() { W = window.innerWidth; H = window.innerHeight; snowCanvas.width=fxCanvas.width=W; snowCanvas.height=fxCanvas.height=H; }
     resizeC(); window.addEventListener('resize', resizeC);
 
-    const flakes = Array.from({length:22}, () => ({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.8+0.7, vy:Math.random()*0.48+0.18, vx:(Math.random()-0.5)*0.22, a:Math.random()*0.3+0.1 }));
+    const flakes = Array.from({length:28}, () => ({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.9+0.8, vy:Math.random()*0.5+0.2, vx:(Math.random()-0.5)*0.24, a:Math.random()*0.32+0.12 }));
+    const stars = Array.from({length:85}, () => ({ x:(Math.random()-0.5)*W, y:(Math.random()-0.5)*H, z:Math.random()*W }));
+    let shootingStar = null;
+    const petals = Array.from({length:28}, () => ({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*5+4, vx:Math.random()*0.7+0.3, vy:Math.random()*0.8+0.45, rot:Math.random()*Math.PI*2, vr:(Math.random()-0.5)*0.04 }));
+    const embers = Array.from({length:38}, () => ({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*2.6+1, vy:-(Math.random()*1.1+0.4), vx:(Math.random()-0.5)*0.6, a:Math.random()*0.65+0.25 }));
+    const bubbles = Array.from({length:26}, () => ({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*7+3, vy:-(Math.random()*0.75+0.25), ph:Math.random()*6.28 }));
+    const netNodes = Array.from({length:36}, () => ({ x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.55, vy:(Math.random()-0.5)*0.55 }));
+    let matrixCols = Math.max(12, Math.floor(W / 20));
+    let matrixDrops = Array.from({length: matrixCols}, () => Math.random() * -40);
+    const MATRIX_CHARS = '01ZIMA❄️アウエオカキクケコ789';
+    let bgTick = 0;
+
     let particles = [], activeFireUntil = 0;
 
     function spawnParticles(x, y, count = 10, opts = {}) {
@@ -1907,8 +2249,105 @@
       if (e.target.closest('button')) SFX.click();
     });
     (function loop() {
-      snowCtx.clearRect(0,0,W,H);
-      for (const s of flakes) { s.y+=s.vy; s.x+=s.vx; if (s.y>H+5){s.y=-5;s.x=Math.random()*W;} snowCtx.beginPath(); snowCtx.arc(s.x,s.y,s.r,0,Math.PI*2); snowCtx.fillStyle=`rgba(210,238,255,${s.a})`; snowCtx.fill(); }
+      bgTick++;
+      if (currentTheme === 'matrix_rain') {
+        if (bgTick % 2 === 0) {
+          const cols = Math.max(12, Math.floor(W / 20));
+          if (cols !== matrixCols) { matrixCols = cols; matrixDrops = Array.from({length: cols}, () => Math.random() * -30); }
+          snowCtx.fillStyle = 'rgba(2, 10, 5, 0.14)';
+          snowCtx.fillRect(0, 0, W, H);
+          snowCtx.font = '14px monospace';
+          for (let i = 0; i < matrixDrops.length; i++) {
+            const ch = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+            snowCtx.fillStyle = Math.random() > 0.92 ? '#bbf7d0' : 'rgba(34, 197, 94, 0.65)';
+            snowCtx.fillText(ch, i * 20, matrixDrops[i] * 20);
+            if (matrixDrops[i] * 20 > H && Math.random() > 0.975) matrixDrops[i] = 0;
+            matrixDrops[i] += 0.7;
+          }
+        }
+      } else {
+        snowCtx.clearRect(0, 0, W, H);
+        if (currentTheme === 'starfield') {
+          const cx = W / 2, cy = H / 2;
+          for (const st of stars) {
+            st.z -= 2.4;
+            if (st.z <= 2) { st.x = (Math.random()-0.5)*W; st.y = (Math.random()-0.5)*H; st.z = W; }
+            const sx = cx + (st.x / st.z) * W * 0.65, sy = cy + (st.y / st.z) * H * 0.65;
+            const r = Math.max(0.5, (1 - st.z / W) * 2.6);
+            snowCtx.fillStyle = `rgba(210, 232, 255, ${1 - st.z / W})`;
+            snowCtx.beginPath(); snowCtx.arc(sx, sy, r, 0, Math.PI * 2); snowCtx.fill();
+          }
+          if (!shootingStar && Math.random() < 0.008) {
+            shootingStar = { x: Math.random() * W * 0.8, y: Math.random() * H * 0.35, vx: 11, vy: 5.5, life: 28 };
+          }
+          if (shootingStar) {
+            snowCtx.strokeStyle = `rgba(186, 230, 253, ${shootingStar.life / 28})`;
+            snowCtx.lineWidth = 2;
+            snowCtx.beginPath(); snowCtx.moveTo(shootingStar.x, shootingStar.y);
+            snowCtx.lineTo(shootingStar.x - 45, shootingStar.y - 22); snowCtx.stroke();
+            shootingStar.x += shootingStar.vx; shootingStar.y += shootingStar.vy;
+            if (--shootingStar.life <= 0) shootingStar = null;
+          }
+        } else if (currentTheme === 'sakura') {
+          for (const p of petals) {
+            p.x += p.vx + Math.sin(bgTick * 0.02 + p.rot) * 0.4; p.y += p.vy; p.rot += p.vr;
+            if (p.y > H + 12) { p.y = -12; p.x = Math.random() * W; }
+            if (p.x > W + 12) p.x = -12;
+            snowCtx.save(); snowCtx.translate(p.x, p.y); snowCtx.rotate(p.rot);
+            snowCtx.fillStyle = 'rgba(249, 168, 212, 0.58)';
+            snowCtx.beginPath(); snowCtx.ellipse(0, 0, p.r, p.r * 0.55, 0, 0, Math.PI * 2); snowCtx.fill();
+            snowCtx.restore();
+          }
+        } else if (currentTheme === 'lava_ember') {
+          for (const e of embers) {
+            e.y += e.vy; e.x += e.vx + Math.sin(bgTick * 0.03 + e.y * 0.02) * 0.35;
+            if (e.y < -8) { e.y = H + 8; e.x = Math.random() * W; }
+            snowCtx.fillStyle = `rgba(251, 146, 60, ${e.a})`;
+            snowCtx.shadowBlur = 10; snowCtx.shadowColor = '#ef4444';
+            snowCtx.beginPath(); snowCtx.arc(e.x, e.y, e.r, 0, Math.PI * 2); snowCtx.fill();
+          }
+          snowCtx.shadowBlur = 0;
+        } else if (currentTheme === 'ocean') {
+          for (const b of bubbles) {
+            b.y += b.vy; b.x += Math.sin(bgTick * 0.025 + b.ph) * 0.45;
+            if (b.y < -14) { b.y = H + 14; b.x = Math.random() * W; }
+            snowCtx.strokeStyle = 'rgba(125, 211, 252, 0.32)'; snowCtx.lineWidth = 1.2;
+            snowCtx.beginPath(); snowCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2); snowCtx.stroke();
+          }
+        } else if (currentTheme === 'aurora') {
+          for (let r = 0; r < 2; r++) {
+            snowCtx.beginPath();
+            const baseY = H * (0.24 + r * 0.18);
+            for (let x = 0; x <= W; x += 28) {
+              const y = baseY + Math.sin(x * 0.004 + bgTick * 0.012 + r * 2) * 48 + Math.cos(x * 0.009 - bgTick * 0.008) * 22;
+              if (x === 0) snowCtx.moveTo(x, y); else snowCtx.lineTo(x, y);
+            }
+            snowCtx.strokeStyle = r === 0 ? 'rgba(52, 211, 153, 0.16)' : 'rgba(56, 189, 248, 0.14)';
+            snowCtx.lineWidth = 44; snowCtx.stroke();
+          }
+          for (const s of flakes) { s.y+=s.vy; s.x+=s.vx; if (s.y>H+5){s.y=-5;s.x=Math.random()*W;} snowCtx.beginPath(); snowCtx.arc(s.x,s.y,s.r,0,Math.PI*2); snowCtx.fillStyle=`rgba(167,243,208,${s.a})`; snowCtx.fill(); }
+        } else if (currentTheme === 'neon_net') {
+          for (const n of netNodes) {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < 0 || n.x > W) n.vx *= -1;
+            if (n.y < 0 || n.y > H) n.vy *= -1;
+            snowCtx.fillStyle = 'rgba(56, 189, 248, 0.55)';
+            snowCtx.beginPath(); snowCtx.arc(n.x, n.y, 2.2, 0, Math.PI * 2); snowCtx.fill();
+          }
+          snowCtx.lineWidth = 1;
+          for (let i = 0; i < netNodes.length; i++) {
+            for (let j = i + 1; j < netNodes.length; j++) {
+              const dx = netNodes[i].x - netNodes[j].x, dy = netNodes[i].y - netNodes[j].y, d2 = dx*dx + dy*dy;
+              if (d2 < 19000) {
+                snowCtx.strokeStyle = `rgba(56, 189, 248, ${(1 - d2 / 19000) * 0.24})`;
+                snowCtx.beginPath(); snowCtx.moveTo(netNodes[i].x, netNodes[i].y); snowCtx.lineTo(netNodes[j].x, netNodes[j].y); snowCtx.stroke();
+              }
+            }
+          }
+        } else {
+          for (const s of flakes) { s.y+=s.vy; s.x+=s.vx; if (s.y>H+5){s.y=-5;s.x=Math.random()*W;} snowCtx.beginPath(); snowCtx.arc(s.x,s.y,s.r,0,Math.PI*2); snowCtx.fillStyle=currentTheme==='tg_sky'||currentTheme==='light'?`rgba(255,255,255,${s.a+0.25})`:`rgba(210,238,255,${s.a})`; snowCtx.fill(); }
+        }
+      }
       fxCtx.clearRect(0,0,W,H);
       if (Date.now() < activeFireUntil) {
         for (let i=0;i<8;i++) particles.push({ x:Math.random()*W, y:H+10, vx:(Math.random()-0.5)*3, vy:-(Math.random()*8+5), size:Math.random()*18+10, color:['#fef08a','#fb923c','#f97316','#dc2626'][Math.floor(Math.random()*4)], gravity:-0.06, life:46, maxLife:46 });
@@ -1941,7 +2380,9 @@
     let activeChatUnsubs = [], globalUnsubs = [];
     let selectedFx = 'none', activeStickerPackTab = 'base';
     let contextTarget = null, forwardMessagesList = [];
+    let replyTargetMsg = null, editingTargetMsg = null;
     let pendingMedia = { data: null, frame: 'none' };
+    let pendingFileSend = null; // { kind: 'video'|'file', dataUrl, fileName, fileSize }
     let typingTimeout = null, loginAttempts = 0, loginLockedUntil = 0;
 
     let multiSelectMode = false;
@@ -2115,8 +2556,13 @@
     // 9. ЗАПУСК МЕССЕНДЖЕРА И LIVE-ПОДПИСКИ
     // =========================================================================
     let prevUnreadSnapshot = {};
+    let chatsInitialLoaded = false;
+    let prevGroupTs = {}, groupsInitialLoaded = false;
+    let prevChanTs = {}, chansInitialLoaded = false;
 
     function enterMessenger(user) {
+      chatsInitialLoaded = false; groupsInitialLoaded = false; chansInitialLoaded = false;
+      prevUnreadSnapshot = {}; prevGroupTs = {}; prevChanTs = {};
       currentUser = user;
       document.getElementById('authScreen').style.display = 'none';
       document.getElementById('appShell').style.display = 'flex';
@@ -2154,25 +2600,70 @@
         onValue(ref(db, `dmAllowedFor/${user.uid}`), (s) => { dmAllowedByPeer = s.val()||{}; if (activeTarget) updateChatHeader(); }),
         onValue(ref(db, `userChats/${user.uid}`), (s) => {
           const next = s.val() || {};
-          Object.entries(next).forEach(([peerUid, c]) => {
-            const prev = prevUnreadSnapshot[peerUid];
-            if (prev && (c.unread || 0) > (prev.unread || 0)) {
-              const pref = userChatPrefsMap[`dm_${peerUid}`];
-              const isOpenNow = !document.hidden && activeTarget?.type === 'dm' && activeTarget.id === peerUid;
-              if (!pref?.muted && !isOpenNow) {
-                const peer = allUsersCache[peerUid];
-                const who = peer ? getDisplayName(peer) : 'Новое сообщение';
-                SFX.incoming();
-                sendSystemNotification(`💬 ${who}`, c.lastMessage || 'Новое сообщение', () => openTarget({ type:'dm', id:peerUid }));
+          if (chatsInitialLoaded) {
+            Object.entries(next).forEach(([peerUid, c]) => {
+              const prev = prevUnreadSnapshot[peerUid];
+              const gotNew = (!prev && (c.unread || 0) > 0) || (prev && ((c.unread || 0) > (prev.unread || 0) || ((c.lastTimestamp || 0) > (prev.lastTimestamp || 0) && (c.unread || 0) > 0)));
+              if (gotNew) {
+                const pref = userChatPrefsMap[`dm_${peerUid}`];
+                const isOpenNow = !document.hidden && activeTarget?.type === 'dm' && activeTarget.id === peerUid;
+                if (!pref?.muted && !isOpenNow) {
+                  const peer = allUsersCache[peerUid];
+                  const who = peer ? getDisplayName(peer) : 'Новое сообщение';
+                  const handle = peer ? ` (@${peer.username})` : '';
+                  const msgPreview = c.lastMessage || 'Новое сообщение';
+                  SFX.incoming();
+                  sendSystemNotification(`💬 ${who}${handle}`, `${who} написал(а): ${msgPreview}`, () => openTarget({ type:'dm', id:peerUid }), { tag: 'dm_' + peerUid });
+                }
               }
-            }
-          });
+            });
+          }
+          chatsInitialLoaded = true;
           prevUnreadSnapshot = next;
           userChatsMap = next;
           updateNavBadges(); renderSidebar();
         }),
-        onValue(ref(db, 'groups'), (s) => { groupsMap = s.val()||{}; renderSidebar(); if (activeTarget?.type==='group') updateChatHeader(); }),
-        onValue(ref(db, 'channels'), (s) => { channelsMap = s.val()||{}; renderSidebar(); if (activeTarget?.type==='channel') updateChatHeader(); }),
+        onValue(ref(db, 'groups'), (s) => {
+          const next = s.val() || {};
+          if (groupsInitialLoaded) {
+            Object.entries(next).forEach(([gid, g]) => {
+              if (!g.members?.[user.uid]) return;
+              const prevTs = prevGroupTs[gid] || 0;
+              const myPrefix = `${currentUser.displayName || currentUser.username}:`;
+              if ((g.lastTimestamp || 0) > prevTs && !(g.lastMessage || '').startsWith(myPrefix)) {
+                const pref = userChatPrefsMap[`group_${gid}`];
+                const isOpenNow = !document.hidden && activeTarget?.type === 'group' && activeTarget.id === gid;
+                if (!pref?.muted && !isOpenNow) {
+                  SFX.incoming();
+                  sendSystemNotification(`👥 ${g.name}`, g.lastMessage || 'Новое сообщение в группе', () => openTarget({ type:'group', id:gid }), { tag: 'grp_' + gid });
+                }
+              }
+            });
+          }
+          Object.entries(next).forEach(([gid, g]) => { prevGroupTs[gid] = g.lastTimestamp || 0; });
+          groupsInitialLoaded = true;
+          groupsMap = next; renderSidebar(); if (activeTarget?.type==='group') updateChatHeader();
+        }),
+        onValue(ref(db, 'channels'), (s) => {
+          const next = s.val() || {};
+          if (chansInitialLoaded) {
+            Object.entries(next).forEach(([cid, ch]) => {
+              if (!ch.subscribers?.[user.uid] || ch.creatorUid === user.uid) return;
+              const prevTs = prevChanTs[cid] || 0;
+              if ((ch.lastTimestamp || 0) > prevTs) {
+                const pref = userChatPrefsMap[`channel_${cid}`];
+                const isOpenNow = !document.hidden && activeTarget?.type === 'channel' && activeTarget.id === cid;
+                if (!pref?.muted && !isOpenNow) {
+                  SFX.incoming();
+                  sendSystemNotification(`📢 ${ch.name}`, ch.lastMessage || 'Новый пост в канале', () => openTarget({ type:'channel', id:cid }), { tag: 'ch_' + cid });
+                }
+              }
+            });
+          }
+          Object.entries(next).forEach(([cid, ch]) => { prevChanTs[cid] = ch.lastTimestamp || 0; });
+          chansInitialLoaded = true;
+          channelsMap = next; renderSidebar(); if (activeTarget?.type==='channel') updateChatHeader();
+        }),
         onValue(ref(db, 'stickerPacks'), (s) => {
           stickerPacksMap = s.val()||{}; renderStickerPicker(); updateNavBadges(); renderSidebar();
           if (activeTarget?.type === 'bot_mod') renderModerationChat();
@@ -2259,10 +2750,12 @@
             <button class="settings-cat-btn" data-cat="privacy"><span>🔒 Конфиденциальность</span><span>›</span></button>
             <button class="settings-cat-btn" data-cat="appearance"><span>🎨 Оформление и темы</span><span>›</span></button>
             <button class="settings-cat-btn" data-cat="calls"><span>📞 Звонки и уведомления</span><span>›</span></button>
+            <button class="settings-cat-btn" id="installPwaBtn"><span>📲 Ярлык на главный экран</span><span>›</span></button>
             <button class="glass-btn btn-danger" id="profLogoutBtn" style="width:100%; margin-top:4px;">🚪 Выйти из аккаунта</button>
           </div>
         `;
         box.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { profileSettingsView = b.dataset.cat; renderSidebar(); });
+        box.querySelector('#installPwaBtn').onclick = triggerPwaInstall;
         box.querySelector('#profLogoutBtn').onclick = logout;
         return;
       }
@@ -2391,37 +2884,80 @@
 
       if (profileSettingsView === 'privacy') {
         const pol = currentUser.dmPolicy || 'friends';
+        const cpol = currentUser.callPolicy || 'friends';
+        const isSearchable = currentUser.searchable !== false;
         box.innerHTML = `
           <div style="padding:6px; display:flex; flex-direction:column; gap:12px;">
             ${backBtnHtml}
             <div class="bot-card">
-              <div style="font-weight:800; margin-bottom:10px;">🔒 Кто может писать мне в ЛС</div>
+              <div style="font-weight:800; margin-bottom:6px;">🔍 Отображение профиля в поиске</div>
+              <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
+                Если выключить, незнакомые люди не смогут найти твой @юз через глобальный поиск.
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <button class="glass-btn ${isSearchable?'btn-primary':''}" data-srch="1">✅ Да (виден)</button>
+                <button class="glass-btn ${!isSearchable?'btn-danger':''}" data-srch="0">🙈 Нет (скрыт)</button>
+              </div>
+            </div>
+
+            <div class="bot-card">
+              <div style="font-weight:800; margin-bottom:10px;">💬 Кто может писать мне в ЛС</div>
               <div style="display:flex; flex-direction:column; gap:8px;">
                 <button class="glass-btn ${pol==='everyone'?'btn-primary':''}" data-pol="everyone" style="justify-content:flex-start;">🌍 Все пользователи</button>
                 <button class="glass-btn ${pol==='friends'?'btn-primary':''}" data-pol="friends" style="justify-content:flex-start;">👥 Только друзья</button>
                 <button class="glass-btn ${pol==='nobody'?'btn-primary':''}" data-pol="nobody" style="justify-content:flex-start;">🚫 Никто (только кому я написал первым)</button>
               </div>
             </div>
+
+            <div class="bot-card">
+              <div style="font-weight:800; margin-bottom:10px;">📞 Кто может мне звонить</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <button class="glass-btn ${cpol==='everyone'?'btn-primary':''}" data-cpol="everyone" style="justify-content:flex-start;">🌍 Все пользователи</button>
+                <button class="glass-btn ${cpol==='friends'?'btn-primary':''}" data-cpol="friends" style="justify-content:flex-start;">👥 Только друзья</button>
+                <button class="glass-btn ${cpol==='nobody'?'btn-primary':''}" data-cpol="nobody" style="justify-content:flex-start;">🚫 Никто</button>
+              </div>
+            </div>
           </div>
         `;
         box.querySelector('#profBackBtn').onclick = () => { profileSettingsView='menu'; renderSidebar(); };
+        box.querySelectorAll('[data-srch]').forEach(b => b.onclick = async () => {
+          const val = b.dataset.srch === '1';
+          await update(ref(db, `users/${currentUser.uid}`), { searchable: val });
+          showToast(val ? '🔍 Профиль виден в поиске' : '🙈 Профиль скрыт из поиска', '#34d399');
+        });
         box.querySelectorAll('[data-pol]').forEach(b => b.onclick = async () => {
           await update(ref(db, `users/${currentUser.uid}`), { dmPolicy: b.dataset.pol });
-          showToast('🔒 Конфиденциальность обновлена!', '#34d399');
+          showToast('🔒 Настройки ЛС обновлены!', '#34d399');
+        });
+        box.querySelectorAll('[data-cpol]').forEach(b => b.onclick = async () => {
+          await update(ref(db, `users/${currentUser.uid}`), { callPolicy: b.dataset.cpol });
+          showToast('📞 Настройки звонков обновлены!', '#34d399');
         });
         return;
       }
 
       if (profileSettingsView === 'appearance') {
         const themes = [
-          ['dark','🌑 Тёмная'], ['light','☀️ Светлая'], ['aurora','🌌 Аврора'],
-          ['ocean','🌊 Океан'], ['cyber','👾 Киберпанк'], ['sunset','🌅 Закат']
+          ['dark',          '🌑 ZIMA Тёмная'],
+          ['light',         '☀️ Светлая'],
+          ['tg_space',      '🚀 Космос (Узор)'],
+          ['tg_sky',        '☁️ Небо TG (Узор)'],
+          ['emerald_doodle','🌿 Изумруд (Узор)'],
+          ['matrix_rain',   '💻 Матрица (Аним.)'],
+          ['starfield',     '✨ Галактика (Аним.)'],
+          ['sakura',        '🌸 Сакура (Аним.)'],
+          ['cyber_grid',    '🌆 Синтвейв (Аним.)'],
+          ['aurora',        '🌌 Сияние (Аним.)'],
+          ['lava_ember',    '🌋 Магма (Аним.)'],
+          ['ocean',         '🌊 Океан (Аним.)'],
+          ['neon_net',      '🕸️ Неон-сеть (Аним.)'],
+          ['sunset',        '🌅 Закат']
         ];
         box.innerHTML = `
           <div style="padding:6px; display:flex; flex-direction:column; gap:12px;">
             ${backBtnHtml}
             <div class="bot-card">
-              <div style="font-weight:800; margin-bottom:10px;">🎨 Выбери тему оформления</div>
+              <div style="font-weight:800; margin-bottom:10px;">🎨 Темы, узоры и живые фоны</div>
               <div class="theme-grid">
                 ${themes.map(([id, lbl]) => `<button class="theme-card ${currentTheme===id?'active':''}" data-th="${id}">${lbl}</button>`).join('')}
               </div>
@@ -2449,7 +2985,14 @@
 
       if (profileSettingsView === 'calls') {
         const perm = ('Notification' in window) ? Notification.permission : 'unsupported';
-        const rings = [['classic','🔔 Классика'],['crystal','❄️ Кристалл'],['cyber','⚡ Кибер'],['soft','🌙 Мягкий'],['pulse','📡 Пульс']];
+        const rings = [
+          ['zima_bells',     '❄️ Зимний перезвон'],
+          ['nordic_marimba', '💎 Скандинавия (Маримба)'],
+          ['aurora_dream',   '🌌 Аврора (Лоу-фай)'],
+          ['tg_classic',     '📞 Классика HD'],
+          ['neon_waves',     '🌊 Неоновая волна'],
+          ['zen_kalimba',    '🎋 Калимба (Нежный)']
+        ];
         if (customRingtoneData) rings.push(['custom','🎵 Свой рингтон']);
         box.innerHTML = `
           <div style="padding:6px; display:flex; flex-direction:column; gap:12px;">
@@ -2457,14 +3000,20 @@
             <div class="bot-card">
               <div style="font-weight:800; margin-bottom:6px;">🔔 Системные уведомления</div>
               <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
-                Присылает реальные пуш-уведомления от сайта о сообщениях, личных и групповых звонках.
+                Присылает реальные пуш-уведомления от браузера, когда вкладка свёрнута: кто написал и кто звонит.
               </div>
-              <button class="glass-btn ${perm==='granted'?'btn-success':'btn-primary'}" id="reqNotifBtn" style="width:100%;">
-                ${perm==='granted' ? '✅ Уведомления разрешены' : '🔔 Включить уведомления'}
-              </button>
+              <div style="display:flex; flex-direction:column; gap:7px;">
+                <button class="glass-btn ${perm==='granted'?'btn-success':'btn-primary'}" id="reqNotifBtn" style="width:100%;">
+                  ${perm==='granted' ? '✅ Уведомления разрешены' : '🔔 Включить уведомления'}
+                </button>
+                ${perm==='granted' ? `<button class="glass-btn" id="testNotifBtn" style="width:100%;font-size:12.5px;">🧪 Проверить уведомление</button>` : ''}
+              </div>
             </div>
             <div class="bot-card">
-              <div style="font-weight:800; margin-bottom:8px;">🎵 Рингтон входящего звонка</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span style="font-weight:800;">🎵 Рингтон входящего звонка</span>
+                <button class="glass-btn" id="stopRingPreviewBtn" style="padding:4px 9px;font-size:11px;">⏹ Стоп</button>
+              </div>
               <div style="display:flex; flex-direction:column; gap:6px;">
                 ${rings.map(([id, lbl]) => `
                   <div style="display:flex; gap:6px;">
@@ -2479,6 +3028,9 @@
         `;
         box.querySelector('#profBackBtn').onclick = () => { stopRingtone(); profileSettingsView='menu'; renderSidebar(); };
         box.querySelector('#reqNotifBtn').onclick = requestNotifPermission;
+        const tnBtn = box.querySelector('#testNotifBtn');
+        if (tnBtn) tnBtn.onclick = () => { SFX.incoming(); sendSystemNotification('💬 @fenit', 'fenit написал(а): Привет! Уведомления ZIMA работают отлично ❄️', null, { force: true }); };
+        box.querySelector('#stopRingPreviewBtn').onclick = stopRingtone;
         box.querySelectorAll('[data-ring]').forEach(b => b.onclick = () => {
           selectedRingtone = b.dataset.ring; localStorage.setItem('zima_ringtone', selectedRingtone);
           renderSidebar(); showToast('🎵 Рингтон выбран');
@@ -2536,7 +3088,7 @@
             box.appendChild(el);
           });
         }
-        const users = Object.values(allUsersCache).filter(u => u.uid !== currentUser.uid && !u.banned && ((u.usernameLower||'').includes(q) || (u.displayName||'').toLowerCase().includes(q)));
+        const users = Object.values(allUsersCache).filter(u => u.uid !== currentUser.uid && !u.banned && (u.searchable !== false || friendsMap[u.uid] || isDev(currentUser)) && ((u.usernameLower||'').includes(q) || (u.displayName||'').toLowerCase().includes(q)));
         if (users.length) {
           appendHtml(box, `<div style="font-size:11px;font-weight:800;color:var(--muted);padding:6px 10px;">👤 ПОЛЬЗОВАТЕЛИ</div>`);
           users.forEach(u => {
@@ -2836,6 +3388,7 @@
 
     function openTarget(target) {
       exitMultiSelect();
+      clearReplyEdit();
       activeTarget = target;
       document.getElementById('emptyChatState').style.display = 'none';
       document.getElementById('activeChatWrap').style.display = 'flex';
@@ -3192,6 +3745,7 @@
         const isOut = m.senderUid === currentUser.uid && activeTarget?.type !== 'channel';
         const line = document.createElement('div');
         line.className = 'msg-line ' + (isOut ? 'out' : 'in') + (selectedMsgMap.has(msgId) ? ' selected' : '');
+        line.dataset.msgid = msgId;
 
         const hitZone = document.createElement('div');
         hitZone.className = 'msg-hit-zone';
@@ -3206,6 +3760,9 @@
         }
         const fwdHtml = m.forwardedFrom
           ? `<div class="fwd-banner">↪️ Переслано от ${esc(m.forwardedFrom.displayName)} (@${esc(m.forwardedFrom.username)})</div>` : '';
+        const replyHtml = m.replyTo
+          ? `<div class="reply-quote" data-jump="${esc(m.replyTo.id || '')}" title="Перейти к сообщению"><div class="reply-quote-author">↩️ ${esc(m.replyTo.senderName)}</div><div class="reply-quote-text">${esc(m.replyTo.text)}</div></div>` : '';
+        const editedTag = m.edited ? `<span style="opacity:0.78;font-style:italic;">изм.</span>` : '';
 
         let bodyHtml = '';
         if (m.type === 'call_log') {
@@ -3216,20 +3773,20 @@
           let art = '', lbl = m.stickerLabel || '', anim = m.stickerAnim || '';
           if (m.stickerUrl) art = `<img src="${esc(m.stickerUrl)}" alt="sticker">`;
           else { const st = BASE_STICKERS.find(s => s.id === m.stickerId) || BASE_STICKERS[0]; art = esc(st.emoji); lbl = st.label; anim = st.anim; }
-          bodyHtml = `<div class="sticker-bubble">${fwdHtml}<div class="sticker-art ${anim}">${art}</div>${lbl?`<div class="sticker-caption">${esc(lbl)}</div>`:''}<div class="msg-footer" style="margin-top:4px;">${fmtTime(m.timestamp)}</div></div>`;
+          bodyHtml = `<div class="sticker-bubble">${fwdHtml}${replyHtml}<div class="sticker-art ${anim}">${art}</div>${lbl?`<div class="sticker-caption">${esc(lbl)}</div>`:''}<div class="msg-footer" style="margin-top:4px;">${fmtTime(m.timestamp)}</div></div>`;
         } else if (m.type === 'voice') {
           const fxName = VOICE_FX_LABELS[m.voiceEffect] || '🎙️ Обычный';
-          bodyHtml = `<div class="msg-bubble">${fwdHtml}<div class="voice-box"><button class="voice-play-btn" data-vplay="${msgId}">▶️</button><div class="voice-track"><div class="voice-bar-bg"><div class="voice-bar-fill" id="vbar_${msgId}"></div></div><div class="voice-meta"><span>${fxName}</span><span>${esc(m.voiceDuration || '0:02')}</span></div></div></div>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
+          bodyHtml = `<div class="msg-bubble">${fwdHtml}${replyHtml}<div class="voice-box"><button class="voice-play-btn" data-vplay="${msgId}">▶️</button><div class="voice-track"><div class="voice-bar-bg"><div class="voice-bar-fill" id="vbar_${msgId}"></div></div><div class="voice-meta"><span>${fxName}</span><span>${esc(m.voiceDuration || '0:02')}</span></div></div></div>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
         } else if (m.type === 'media') {
           const mf = m.mediaFrame && m.mediaFrame !== 'none' ? `mf-${m.mediaFrame}` : 'mf-none';
-          bodyHtml = `<div class="msg-bubble" style="padding:7px;">${fwdHtml}<div class="media-frame ${mf}"><img src="${esc(m.mediaData)}" alt="photo" data-zoom="1" /></div>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
+          bodyHtml = `<div class="msg-bubble" style="padding:7px;">${fwdHtml}${replyHtml}<div class="media-frame ${mf}"><img src="${esc(m.mediaData)}" alt="photo" data-zoom="1" /></div>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
         } else if (m.type === 'video') {
-          bodyHtml = `<div class="msg-bubble" style="padding:7px;">${fwdHtml}<video class="video-msg" src="${esc(m.mediaData)}" controls playsinline></video><div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
+          bodyHtml = `<div class="msg-bubble" style="padding:7px;">${fwdHtml}${replyHtml}<video class="video-msg" src="${esc(m.mediaData)}" controls playsinline></video>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
         } else if (m.type === 'file') {
-          bodyHtml = `<div class="msg-bubble">${fwdHtml}<a class="file-card" href="${esc(m.fileData)}" download="${esc(m.fileName || 'file')}"><div class="file-icon">📄</div><div style="min-width:0;flex:1;"><div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(m.fileName || 'Файл')}</div><div style="font-size:11px;opacity:0.75;">${esc(m.fileSize || '')} • Скачать</div></div></a><div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
+          bodyHtml = `<div class="msg-bubble">${fwdHtml}${replyHtml}<a class="file-card" href="${esc(m.fileData)}" download="${esc(m.fileName || 'file')}"><div class="file-icon">📄</div><div style="min-width:0;flex:1;"><div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(m.fileName || 'Файл')}</div><div style="font-size:11px;opacity:0.75;">${esc(m.fileSize || '')} • Скачать</div></div></a>${m.text ? `<div class="msg-text" style="margin-top:6px;">${esc(m.text)}</div>` : ''}<div class="msg-footer">${fmtTime(m.timestamp)}</div></div>`;
         } else {
           const fxClass = m.effect && m.effect !== 'none' ? ` fx-${m.effect}` : '';
-          bodyHtml = `<div class="msg-bubble${fxClass}">${fwdHtml}<div class="msg-text">${esc(m.text)}</div><div class="msg-footer">${m.effect && m.effect !== 'none' ? '✨' : ''} <span>${fmtTime(m.timestamp)}</span></div></div>`;
+          bodyHtml = `<div class="msg-bubble${fxClass}">${fwdHtml}${replyHtml}<div class="msg-text">${esc(m.text)}</div><div class="msg-footer">${editedTag} ${m.effect && m.effect !== 'none' ? '✨' : ''} <span>${fmtTime(m.timestamp)}</span></div></div>`;
         }
 
         let reactsHtml = '';
@@ -3248,6 +3805,25 @@
 
         const sHead = row.querySelector('[data-sprof]');
         if (sHead) sHead.onclick = (ev) => { ev.stopPropagation(); openEntityProfile('dm', sHead.dataset.sprof); };
+
+        const rQuote = row.querySelector('[data-jump]');
+        if (rQuote) {
+          rQuote.addEventListener('click', (ev) => {
+            if (multiSelectMode) return;
+            ev.stopPropagation();
+            const targetId = rQuote.dataset.jump;
+            const targetLine = targetId ? area.querySelector(`.msg-line[data-msgid="${targetId}"]`) : null;
+            if (targetLine) {
+              targetLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              targetLine.classList.remove('jump-highlight');
+              void targetLine.offsetWidth;
+              targetLine.classList.add('jump-highlight');
+              setTimeout(() => targetLine.classList.remove('jump-highlight'), 1800);
+            } else {
+              showToast('Исходное сообщение удалено или выше истории');
+            }
+          });
+        }
 
         const zoomImg = row.querySelector('[data-zoom]');
         if (zoomImg) {
@@ -3330,8 +3906,13 @@
       const path = getMsgDbPath(target);
       if (!path) return;
       const now = Date.now();
+      const payload = { ...msgFields };
+      if (replyTargetMsg && activeTarget && target.type === activeTarget.type && target.id === activeTarget.id && !payload.forwardedFrom) {
+        payload.replyTo = replyTargetMsg;
+        clearReplyEdit();
+      }
       const mRef = push(ref(db, path));
-      await set(mRef, { id: mRef.key, senderUid: currentUser.uid, timestamp: now, ...msgFields });
+      await set(mRef, { id: mRef.key, senderUid: currentUser.uid, timestamp: now, ...payload });
 
       if (target.type === 'dm') {
         set(ref(db, `dmAllowedFor/${target.id}/${currentUser.uid}`), true).catch(()=>{});
@@ -3352,7 +3933,7 @@
     const voiceOrSendBtn = document.getElementById('voiceOrSendBtn');
     function syncComposerBtn() {
       const hasTxt = msgInputEl.value.trim().length > 0;
-      if (!isRecordingVoice) voiceOrSendBtn.textContent = hasTxt ? '➤' : '🎙️';
+      if (!isRecordingVoice) voiceOrSendBtn.textContent = editingTargetMsg ? '✓' : (hasTxt ? '➤' : '🎙️');
     }
     msgInputEl.addEventListener('input', () => {
       syncComposerBtn();
@@ -3376,6 +3957,13 @@
       if (selectedFx !== 'none') playMessageFx(selectedFx, rect.left, rect.top);
       else spawnParticles(rect.left+15, rect.top+15, 10, { colors:['#2aabee','#818cf8','#fff'], speed:5, upward:2 });
 
+      if (editingTargetMsg) {
+        const { dbPath, msgId } = editingTargetMsg;
+        clearReplyEdit();
+        await update(ref(db, `${dbPath}/${msgId}`), { text, edited: true });
+        showToast('✏️ Сообщение изменено');
+        return;
+      }
       if (activeTarget.type === 'dm') set(ref(db, `typing/${[currentUser.uid, activeTarget.id].sort().join('_')}/${currentUser.uid}`), false).catch(()=>{});
       await dispatchMessage(activeTarget, { type: 'text', text, effect: selectedFx }, text);
     }
@@ -3452,29 +4040,104 @@
     document.getElementById('attVideoBtn').onclick = () => { attachMenu.style.display='none'; document.getElementById('videoFileInput').click(); };
     document.getElementById('attFileBtn').onclick = () => { attachMenu.style.display='none'; document.getElementById('anyFileInput').click(); };
 
-    document.getElementById('photoFileInput').addEventListener('change', async (e) => {
-      const f = e.target.files[0]; e.target.value = ''; if (!f || !activeTarget) return;
-      if (activeTarget.type === 'bot_stickers') { await handleStickerBotPhoto(f); return; }
-      if (activeTarget.type === 'bot_suggest') { await handleSuggestBotPhoto(f); return; }
+    async function handleIncomingFileToChat(f, forcedKind = null) {
+      if (!f || !activeTarget) return;
+      if (activeTarget.type === 'bot_mod') return;
+      if (document.getElementById('chatInputRow').style.display === 'none') return showToast('Нельзя отправлять файлы в этот чат', '#fb7185');
+
+      const isImg = forcedKind === 'image' || (!forcedKind && f.type && f.type.startsWith('image/'));
+      const isVid = forcedKind === 'video' || (!forcedKind && f.type && f.type.startsWith('video/'));
+
+      if (isImg) {
+        if (activeTarget.type === 'bot_stickers') { await handleStickerBotPhoto(f); return; }
+        if (activeTarget.type === 'bot_suggest') { await handleSuggestBotPhoto(f); return; }
+        try {
+          const dataUrl = await processImageFile(f, 760, 1.5);
+          pendingMedia = { data: dataUrl, frame: 'none' };
+          document.getElementById('mediaPreviewImg').src = dataUrl;
+          document.getElementById('mediaPreviewContainer').className = 'media-frame mf-none';
+          document.getElementById('mediaCaptionInput').value = '';
+          document.querySelectorAll('#frameChoices .vfx-chip').forEach(b => b.classList.toggle('active', b.dataset.mf === 'none'));
+          document.getElementById('mediaFrameModal').style.display = 'flex';
+        } catch (err) { showToast(String(err), '#fb7185'); }
+        return;
+      }
+
+      if (activeTarget.type === 'bot_stickers' || activeTarget.type === 'bot_suggest') {
+        return showToast('Этому боту можно отправлять только фото или GIF', '#fb7185');
+      }
+
       try {
-        const dataUrl = await processImageFile(f, 760, 1.5);
-        pendingMedia = { data: dataUrl, frame: 'none' };
-        document.getElementById('mediaPreviewImg').src = dataUrl;
-        document.getElementById('mediaPreviewContainer').className = 'media-frame mf-none';
-        document.getElementById('mediaCaptionInput').value = '';
-        document.querySelectorAll('#frameChoices .vfx-chip').forEach(b => b.classList.toggle('active', b.dataset.mf === 'none'));
-        document.getElementById('mediaFrameModal').style.display = 'flex';
+        showToast('⏳ Подготовка файла...');
+        const dataUrl = await readFileAsDataURL(f, 4.5);
+        pendingFileSend = { kind: isVid ? 'video' : 'file', dataUrl, fileName: f.name || 'file', fileSize: fmtBytes(f.size) };
+        document.getElementById('fsModalTitle').textContent = isVid ? '🎬 Отправка видео' : '📄 Отправка файла';
+        document.getElementById('fsCaptionInput').value = '';
+        const pbox = document.getElementById('fsPreviewBox');
+        if (isVid) {
+          pbox.innerHTML = `<video src="${esc(dataUrl)}" controls playsinline style="max-width:100%;max-height:240px;border-radius:14px;background:#000;"></video>`;
+        } else {
+          pbox.innerHTML = `<div class="bot-card" style="display:flex;align-items:center;gap:12px;text-align:left;"><div class="file-icon">📄</div><div style="min-width:0;flex:1;"><div style="font-weight:700;word-break:break-all;">${esc(f.name || 'Файл')}</div><div style="font-size:12px;color:var(--muted);">${fmtBytes(f.size)}</div></div></div>`;
+        }
+        document.getElementById('fileSendModal').style.display = 'flex';
       } catch (err) { showToast(String(err), '#fb7185'); }
+    }
+
+    document.getElementById('fsCancelBtn').onclick = () => { pendingFileSend = null; closeModal('fileSendModal'); };
+    document.getElementById('fsConfirmBtn').onclick = async () => {
+      if (!pendingFileSend || !activeTarget) return;
+      const cap = document.getElementById('fsCaptionInput').value.trim();
+      const pf = pendingFileSend; pendingFileSend = null;
+      closeModal('fileSendModal'); SFX.send();
+      if (pf.kind === 'video') {
+        await dispatchMessage(activeTarget, { type:'video', mediaData: pf.dataUrl, text: cap }, cap ? `🎬 ${cap}` : '🎬 Видео');
+      } else {
+        await dispatchMessage(activeTarget, { type:'file', fileData: pf.dataUrl, fileName: pf.fileName, fileSize: pf.fileSize, text: cap }, cap ? `📄 ${pf.fileName} — ${cap}` : `📄 ${pf.fileName}`);
+      }
+    };
+
+    document.getElementById('photoFileInput').addEventListener('change', (e) => { const f = e.target.files[0]; e.target.value = ''; handleIncomingFileToChat(f, 'image'); });
+    document.getElementById('videoFileInput').addEventListener('change', (e) => { const f = e.target.files[0]; e.target.value = ''; handleIncomingFileToChat(f, 'video'); });
+    document.getElementById('anyFileInput').addEventListener('change', (e) => { const f = e.target.files[0]; e.target.value = ''; handleIncomingFileToChat(f, 'file'); });
+
+    // Drag & Drop файлов прямо в окно чата
+    const chatPaneEl = document.getElementById('chatPane');
+    const dropOverlayEl = document.getElementById('dropOverlay');
+    let dragDepth = 0;
+    chatPaneEl.addEventListener('dragenter', (e) => {
+      if (!activeTarget || !e.dataTransfer?.types?.includes('Files')) return;
+      e.preventDefault(); dragDepth++; dropOverlayEl.style.display = 'flex';
     });
-    document.getElementById('videoFileInput').addEventListener('change', async (e) => {
-      const f = e.target.files[0]; e.target.value = ''; if (!f || !activeTarget) return;
-      try { showToast('⏳ Загрузка видео...'); const d = await readFileAsDataURL(f, 4.5); SFX.send(); await dispatchMessage(activeTarget, { type:'video', mediaData: d }, '🎬 Видео'); }
-      catch (err) { showToast(String(err), '#fb7185'); }
+    chatPaneEl.addEventListener('dragover', (e) => {
+      if (!activeTarget || !e.dataTransfer?.types?.includes('Files')) return;
+      e.preventDefault(); e.dataTransfer.dropEffect = 'copy';
     });
-    document.getElementById('anyFileInput').addEventListener('change', async (e) => {
-      const f = e.target.files[0]; e.target.value = ''; if (!f || !activeTarget) return;
-      try { const d = await readFileAsDataURL(f, 4.5); SFX.send(); await dispatchMessage(activeTarget, { type:'file', fileData: d, fileName: f.name, fileSize: fmtBytes(f.size) }, `📄 ${f.name}`); }
-      catch (err) { showToast(String(err), '#fb7185'); }
+    chatPaneEl.addEventListener('dragleave', (e) => {
+      if (!e.dataTransfer?.types?.includes('Files')) return;
+      dragDepth = Math.max(0, dragDepth - 1);
+      if (dragDepth === 0) dropOverlayEl.style.display = 'none';
+    });
+    chatPaneEl.addEventListener('drop', (e) => {
+      e.preventDefault(); dragDepth = 0; dropOverlayEl.style.display = 'none';
+      if (!activeTarget) return;
+      const files = e.dataTransfer?.files;
+      if (files && files.length > 0) handleIncomingFileToChat(files[0]);
+    });
+
+    // Вставка скопированных изображений / файлов по Ctrl+V
+    document.addEventListener('paste', (e) => {
+      if (!activeTarget || !currentUser) return;
+      const dt = e.clipboardData; if (!dt) return;
+      const items = dt.items || [];
+      for (const it of items) {
+        if (it.kind === 'file') {
+          const f = it.getAsFile();
+          if (f) { e.preventDefault(); handleIncomingFileToChat(f); return; }
+        }
+      }
+      if (dt.files && dt.files.length > 0) {
+        e.preventDefault(); handleIncomingFileToChat(dt.files[0]);
+      }
     });
     document.querySelectorAll('#frameChoices .vfx-chip').forEach(btn => {
       btn.onclick = () => { document.querySelectorAll('#frameChoices .vfx-chip').forEach(b => b.classList.remove('active')); btn.classList.add('active'); pendingMedia.frame = btn.dataset.mf; document.getElementById('mediaPreviewContainer').className = 'media-frame mf-' + pendingMedia.frame; };
@@ -3492,7 +4155,7 @@
       const myPacks = Object.keys(userStickerPacksMap).map(pid => stickerPacksMap[pid]).filter(p => p && p.status === 'approved');
       tabsEl.innerHTML = `<button class="st-tab ${activeStickerPackTab==='base'?'active':''}" data-sp="base">❄️ Базовые</button>` +
         myPacks.map(p => `<button class="st-tab ${activeStickerPackTab===p.id?'active':''}" data-sp="${p.id}">${esc(p.name)}</button>`).join('');
-      tabsEl.querySelectorAll('.st-tab').forEach(b => b.onclick = () => { activeStickerPackTab = b.dataset.sp; renderStickerPicker(); });
+      tabsEl.querySelectorAll('.st-tab').forEach(b => b.onclick = (ev) => { ev.stopPropagation(); activeStickerPackTab = b.dataset.sp; renderStickerPicker(); });
       gridEl.innerHTML = '';
       if (activeStickerPackTab === 'base') {
         BASE_STICKERS.forEach(s => {
@@ -3512,6 +4175,7 @@
       }
     }
 
+    stickerPanel.addEventListener('click', (e) => e.stopPropagation());
     document.getElementById('toggleStickerBtn').onclick = (e) => { e.stopPropagation(); fxPanel.style.display='none'; attachMenu.style.display='none'; stickerPanel.style.display = stickerPanel.style.display==='block'?'none':'block'; };
     document.getElementById('toggleFxBtn').onclick = (e) => { e.stopPropagation(); stickerPanel.style.display='none'; attachMenu.style.display='none'; fxPanel.style.display = fxPanel.style.display==='block'?'none':'block'; };
     document.querySelectorAll('.fx-chip').forEach(btn => {
@@ -3529,10 +4193,13 @@
     function openMsgContextMenu(x, y, dbPath, msgId, msg) {
       contextTarget = { dbPath, msgId, msg };
       const canDelAll = msg.senderUid === currentUser.uid || isDev(currentUser) || activeTarget?.type === 'saved';
+      const canEdit = msg.senderUid === currentUser.uid && msg.type === 'text';
       document.getElementById('ctxDeleteAllBtn').style.display = canDelAll ? 'flex' : 'none';
+      document.getElementById('ctxEditBtn').style.display = canEdit ? 'flex' : 'none';
       ctxMenu.style.display = 'flex';
-      ctxMenu.style.left = Math.min(Math.max(10, x - 110), W - 235) + 'px';
-      ctxMenu.style.top = Math.min(Math.max(10, y - 90), H - 230) + 'px';
+      const mh = ctxMenu.offsetHeight || 280, mw = ctxMenu.offsetWidth || 256;
+      ctxMenu.style.left = Math.min(Math.max(10, x - mw / 2), W - mw - 10) + 'px';
+      ctxMenu.style.top = Math.min(Math.max(10, y - 90), H - mh - 10) + 'px';
     }
     document.getElementById('ctxReactsRow').onclick = (e) => {
       const b = e.target.closest('.react-choice'); if (!b || !contextTarget) return;
@@ -4229,6 +4896,11 @@
     async function startOutgoingCall(peerUid) {
       if (activeCall || groupRoom) return showToast('Ты уже в звонке!');
       const peer = allUsersCache[peerUid]; if (!peer) return showToast('Пользователь не найден');
+      const peerCallPol = peer.callPolicy || 'friends';
+      const callAllowed = isDev(currentUser) || peerCallPol === 'everyone' || (peerCallPol === 'friends' && !!friendsMap[peerUid]);
+      if (!callAllowed) {
+        return showToast(peerCallPol === 'nobody' ? '🚫 Пользователь отключил входящие звонки' : '🔒 Звонить этому пользователю могут только друзья', '#fb7185');
+      }
       if (!navigator.mediaDevices?.getUserMedia) return showToast('Звонки работают только по HTTPS', '#fb7185');
 
       if ((await get(ref(db, `users/${peerUid}/inCall`))).val() === true) {
@@ -4344,7 +5016,7 @@
 
       renderCallOverlay(peer, 'Входящий звонок ZIMA...', 'incoming');
       startIncomingRingtone();
-      sendSystemNotification(`📞 Входящий звонок`, `${getDisplayName(peer)} (@${peer.username}) звонит в ZIMA!`);
+      sendSystemNotification(`📞 Вам звонит @${peer.username}`, `${getDisplayName(peer)} (@${peer.username}) звонит вам в ZIMA!`, () => window.focus(), { urgent: true, tag: 'call_' + inc.callId });
 
       const uWatch = onValue(ref(db, `calls/${inc.callId}/status`), (s) => {
         const st = s.val();
@@ -4980,6 +5652,61 @@
         document.getElementById('trollPopupOverlay').style.display='flex'; SFX.zap(); vib([200,80,200]);
       }
     }
+
+    // =========================================================================
+    // 20. ОТВЕТЫ И РЕДАКТИРОВАНИЕ СВОИХ СООБЩЕНИЙ
+    // =========================================================================
+    function clearReplyEdit() {
+      replyTargetMsg = null;
+      editingTargetMsg = null;
+      const b = document.getElementById('replyEditBanner');
+      if (b) b.style.display = 'none';
+      syncComposerBtn();
+    }
+
+    document.getElementById('reCancelBtn').onclick = () => {
+      if (editingTargetMsg) { msgInputEl.value = ''; }
+      clearReplyEdit();
+    };
+
+    document.getElementById('ctxReplyBtn').onclick = () => {
+      if (!contextTarget) return;
+      ctxMenu.style.display = 'none';
+      const { msgId, msg } = contextTarget;
+      const sender = allUsersCache[msg.senderUid];
+      const senderName = sender ? getDisplayName(sender) : 'Пользователь';
+      const preview = msg.type === 'text' ? msg.text
+        : msg.type === 'voice' ? (msg.text ? `🎙️ ${msg.text}` : '🎙️ Голосовое сообщение')
+        : msg.type === 'media' ? (msg.text ? `🖼 ${msg.text}` : '🖼 Фото / GIF')
+        : msg.type === 'video' ? (msg.text ? `🎬 ${msg.text}` : '🎬 Видео')
+        : msg.type === 'file' ? `📄 ${msg.fileName || 'Файл'}`
+        : msg.type === 'sticker' ? '✨ Стикер'
+        : 'Сообщение';
+
+      editingTargetMsg = null;
+      replyTargetMsg = { id: msgId, senderName, text: preview.slice(0, 95) };
+      document.getElementById('reBannerTitle').textContent = `↩️ Ответ для ${senderName}`;
+      document.getElementById('reBannerText').textContent = replyTargetMsg.text;
+      document.getElementById('replyEditBanner').style.display = 'flex';
+      syncComposerBtn();
+      msgInputEl.focus();
+    };
+
+    document.getElementById('ctxEditBtn').onclick = () => {
+      if (!contextTarget) return;
+      ctxMenu.style.display = 'none';
+      const { dbPath, msgId, msg } = contextTarget;
+      if (msg.senderUid !== currentUser.uid || msg.type !== 'text') return;
+
+      replyTargetMsg = null;
+      editingTargetMsg = { dbPath, msgId };
+      document.getElementById('reBannerTitle').textContent = '✏️ Редактирование сообщения';
+      document.getElementById('reBannerText').textContent = msg.text.slice(0, 95);
+      document.getElementById('replyEditBanner').style.display = 'flex';
+      msgInputEl.value = msg.text;
+      syncComposerBtn();
+      msgInputEl.focus();
+    };
 
     tryAutoLogin();
   </script>
